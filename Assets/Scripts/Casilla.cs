@@ -1,143 +1,97 @@
+using TMPro;
 using UnityEngine;
 
 namespace Cubatis
 {
     /// <summary>
-    /// Categorías disponibles para las casillas del juego Cubatis.
-    /// </summary>
-    public enum TipoCasilla
-    {
-        Start,
-        Beber,
-        YoNunca,
-        Verdad,
-        Reto,
-        Evento,
-        Hot,
-        End
-    }
-
-    /// <summary>
-    /// Componente adjunto a cada GameObject de casilla en el tablero.
-    /// Almacena su índice en la ruta, su categoría tipada y sus referencias visuales.
+    /// Componente de una casilla ya colocada en el tablero. Guarda su indice
+    /// en el recorrido (0 = START, 1..58 = numeradas, 59 = END), su numero
+    /// visible y su <see cref="TipoCasilla"/> (el "tipo de reto" que usa la
+    /// logica del juego). La construye <see cref="GeneradorTablero"/>.
     /// </summary>
     [SelectionBase]
     [DisallowMultipleComponent]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Casilla : MonoBehaviour
     {
-        [Header("Datos de Casilla")]
-        [Tooltip("Índice de la casilla en el tablero (0 = START, 62 = END).")]
         [SerializeField] private int indice;
+        [SerializeField] private int numero;          // 0 para START y END
+        [SerializeField] private TipoCasilla tipo;
+        [SerializeField] private SpriteRenderer render;
+        [SerializeField] private TextMeshPro texto;
 
-        [Tooltip("Categoría o tipo de acción de esta casilla.")]
-        [SerializeField] private TipoCasilla categoria;
-
-        [Header("Referencias Visuales")]
-        [SerializeField] private SpriteRenderer spriteRenderer;
-
-        #region Propiedades Públicas
-
-        /// <summary>
-        /// Índice de la casilla en la ruta (0 a 62).
-        /// </summary>
         public int Indice => indice;
+        public int Numero => numero;
+        public TipoCasilla Tipo => tipo;
+        public bool EsNumerada => numero > 0;
+        public SpriteRenderer Render => render;
 
         /// <summary>
-        /// Categoría tipada de la casilla.
+        /// Coloca el sprite de forma que su borde inferior-izquierdo quede en
+        /// <paramref name="esquinaMundo"/>, sea cual sea el pivote del sprite.
+        /// <paramref name="unidadesPorPixel"/> = ladoCasillaMundo / ladoSpritePx.
         /// </summary>
-        public TipoCasilla Categoria => categoria;
-
-        /// <summary>
-        /// Nombre legible de la categoría en español.
-        /// </summary>
-        public string NombreCategoria
+        public void Construir(Sprite sprite, Vector3 esquinaMundo, float unidadesPorPixel,
+            int indice, int numero, TipoCasilla tipo,
+            bool conCollider, string sortingLayer, int sortingOrder)
         {
-            get
+            this.indice = indice;
+            this.numero = numero;
+            this.tipo = tipo;
+
+            if (render == null) render = GetComponent<SpriteRenderer>();
+            render.sprite = sprite;
+            render.sortingOrder = sortingOrder;
+            if (!string.IsNullOrEmpty(sortingLayer)) render.sortingLayerName = sortingLayer;
+
+            transform.localScale = Vector3.one * (unidadesPorPixel * sprite.pixelsPerUnit);
+            transform.position = esquinaMundo + (Vector3)(sprite.pivot * unidadesPorPixel);
+
+            if (conCollider)
             {
-                return categoria switch
-                {
-                    TipoCasilla.Start => "START",
-                    TipoCasilla.Beber => "Beber",
-                    TipoCasilla.YoNunca => "Yo nunca",
-                    TipoCasilla.Verdad => "Verdad",
-                    TipoCasilla.Reto => "Reto",
-                    TipoCasilla.Evento => "Evento",
-                    TipoCasilla.Hot => "Hot",
-                    TipoCasilla.End => "END",
-                    _ => categoria.ToString()
-                };
+                if (!TryGetComponent(out BoxCollider2D box))
+                    box = gameObject.AddComponent<BoxCollider2D>();
+                box.size = sprite.rect.size / sprite.pixelsPerUnit;
+                box.offset = CentroLocal(sprite);
             }
         }
 
-        /// <summary>
-        /// Componente SpriteRenderer de la casilla.
-        /// </summary>
-        public SpriteRenderer SpriteRenderer => spriteRenderer;
-
-        #endregion
-
-        #region Inicialización
-
-        /// <summary>
-        /// Inicializa los datos y la configuración visual de la casilla.
-        /// </summary>
-        /// <param name="nuevoIndice">Índice en el tablero (0..62).</param>
-        /// <param name="nuevaCategoria">Categoría asignada.</param>
-        /// <param name="sprite">Sprite correspondiente a la categoría.</param>
-        /// <param name="escalaVisual">Escala local a aplicar en el Transform.</param>
-        /// <param name="agregarCollider">Si es verdadero, asegura un BoxCollider2D ajustado al sprite.</param>
-        /// <param name="sortingOrder">Orden de renderizado en la capa de sprites.</param>
-        /// <param name="sortingLayerName">Nombre de la capa de renderizado.</param>
-        public void Configurar(
-            int nuevoIndice,
-            TipoCasilla nuevaCategoria,
-            Sprite sprite,
-            Vector3 escalaVisual,
-            bool agregarCollider = true,
-            int sortingOrder = 0,
-            string sortingLayerName = "Default")
+        public void CrearNumero(float tamano, Color color, bool visible, string sortingLayer, int sortingOrder)
         {
-            indice = nuevoIndice;
-            categoria = nuevaCategoria;
+            if (numero <= 0) return;
 
-            transform.localScale = escalaVisual;
+            var go = new GameObject("Numero");
+            go.transform.SetParent(transform, false);
+            go.transform.localPosition = (Vector3)CentroLocal(render.sprite) + Vector3.back * 0.1f;
 
-            if (spriteRenderer == null)
-            {
-                spriteRenderer = GetComponent<SpriteRenderer>();
-                if (spriteRenderer == null)
-                {
-                    spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-                }
-            }
+            texto = go.AddComponent<TextMeshPro>();
+            texto.text = numero.ToString();
+            texto.fontSize = tamano;
+            texto.fontStyle = FontStyles.Bold;
+            texto.color = color;
+            texto.alignment = TextAlignmentOptions.Center;
+            texto.outlineWidth = 0.2f;
+            texto.outlineColor = Color.black;
+            texto.rectTransform.sizeDelta = new Vector2(10f, 10f);
 
-            spriteRenderer.sprite = sprite;
-            spriteRenderer.sortingOrder = sortingOrder;
-            if (!string.IsNullOrEmpty(sortingLayerName))
-            {
-                spriteRenderer.sortingLayerName = sortingLayerName;
-            }
+            var mr = go.GetComponent<MeshRenderer>();
+            mr.sortingLayerName = string.IsNullOrEmpty(sortingLayer) ? "Default" : sortingLayer;
+            mr.sortingOrder = sortingOrder;
 
-            if (agregarCollider)
-            {
-                BoxCollider2D collider = GetComponent<BoxCollider2D>();
-                if (collider == null)
-                {
-                    collider = gameObject.AddComponent<BoxCollider2D>();
-                }
-                if (sprite != null)
-                {
-                    collider.size = sprite.rect.size / sprite.pixelsPerUnit;
-                    collider.offset = Vector2.zero;
-                }
-            }
+            go.SetActive(visible);
         }
 
-        #endregion
-
-        public override string ToString()
+        public void MostrarNumero(bool visible)
         {
-            return $"Casilla [{indice}]: {NombreCategoria} ({gameObject.name})";
+            if (texto != null) texto.gameObject.SetActive(visible);
         }
+
+        // Centro geometrico del sprite en coordenadas locales (los sprites del
+        // tablero tienen el pivote en una esquina, no en el centro).
+        private static Vector2 CentroLocal(Sprite sprite) =>
+            (sprite.rect.size * 0.5f - sprite.pivot) / sprite.pixelsPerUnit;
+
+        public override string ToString() =>
+            $"[{indice}] {(EsNumerada ? $"#{numero} " : "")}{tipo}";
     }
 }
