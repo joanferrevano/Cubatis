@@ -19,10 +19,12 @@ namespace Cubatis
     public class SeleccionJugadores : MonoBehaviour
     {
         [Header("Grid de jugadores")]
-        [Tooltip("Objeto con Grid Layout Group. El boton '+' es su primer hijo fijo.")]
+        [Tooltip("Content del Scroll View (tiene el Grid Layout Group). El boton '+' es su primer hijo y hace scroll con el resto.")]
         [SerializeField] private Transform contenedorSlots;
+        [Tooltip("ScrollRect que envuelve el Content. Se usa para llevar la vista al ultimo jugador anadido.")]
+        [SerializeField] private ScrollRect scrollSlots;
         [SerializeField] private SlotJugador prefabSlot;
-        [SerializeField] private GameObject botonMas;       // slot "+" fijo
+        [SerializeField] private GameObject botonMas;       // slot "+" (primer elemento del grid, hace scroll)
         [SerializeField] private Button botonEmpezar;
 
         [Header("Popup anadir jugador")]
@@ -90,8 +92,9 @@ namespace Cubatis
             botonMas.transform.SetAsFirstSibling();
             botonMas.SetActive(Jugadores.HaySitio);
 
-            int visibles = Mathf.Min(Jugadores.VisiblesMax, Jugadores.Cuenta);
-            for (int i = 0; i < visibles; i++)
+            // Se instancian TODOS los jugadores (hasta Jugadores.Maximo); el scroll
+            // del ContenedorSlots permite ver y gestionar los que no caben en pantalla.
+            for (int i = 0; i < Jugadores.Cuenta; i++)
             {
                 int indice = i;
                 var slot = Instantiate(prefabSlot, contenedorSlots);
@@ -145,6 +148,13 @@ namespace Cubatis
             Jugadores.Anadir(campoNombre.text.Trim(), avatarElegido);
             CerrarPopup();
             RefrescarGrid();
+
+            // Lleva la vista al final para que se vea el jugador recien anadido.
+            if (scrollSlots != null)
+            {
+                Canvas.ForceUpdateCanvases();
+                scrollSlots.verticalNormalizedPosition = 0f;
+            }
         }
 
         // ===================== NAVEGACION =====================

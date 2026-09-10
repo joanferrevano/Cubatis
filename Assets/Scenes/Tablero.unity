@@ -12656,6 +12656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1200000001}
   - component: {fileID: 1200000003}
+  - component: {fileID: 1200000004}
   m_Layer: 0
   m_Name: Tablero
   m_TagString: Untagged
@@ -12770,6 +12771,24 @@ MonoBehaviour:
   - {fileID: 1418728548}
   - {fileID: 324872249}
   - {fileID: 1899079980}
+--- !u!114 &1200000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ce67c4d9ed0e349a39151779d3b06a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.MovimientoFicha
+  duracionPorCasilla: 0.18
+  alturaSalto: 0.3
+  offsetFicha: {x: 0, y: 0, z: 0}
+  alLlegarACasilla:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1205479395
 GameObject:
   m_ObjectHideFlags: 0
@@ -18777,6 +18796,63 @@ MeshRenderer:
   m_SortingOrder: 75
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1608801052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1608801054}
+  - component: {fileID: 1608801053}
+  m_Layer: 0
+  m_Name: GestorPartida
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1608801053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608801052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b62cae53493a44a9f4150abafc5bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.GestorPartida
+  tablero: {fileID: 1200000003}
+  movimiento: {fileID: 1200000004}
+  dado: {fileID: 1743511257}
+  avatares: []
+  tamanoFicha: 0.45
+  separacionFichas: 0.18
+  sortingLayerFichas: Default
+  ordenFichas: 500
+  jugadoresDePruebaSiVacio: 1
+  jugadoresDePrueba: 3
+  alCaerEnCasilla:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &1608801054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608801052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.93029, y: -1.49867, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1615524495
 GameObject:
   m_ObjectHideFlags: 0
@@ -24632,3 +24708,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1743511259}
   - {fileID: 1200000001}
+  - {fileID: 1608801054}

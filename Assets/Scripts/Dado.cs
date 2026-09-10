@@ -39,6 +39,24 @@ namespace Cubatis
         public int UltimoResultado { get; private set; }
         public bool Girando { get; private set; }
 
+        private bool puedeTirar = true;
+        /// <summary>
+        /// Si es false, el dado ignora los toques (turno ajeno o ficha en
+        /// movimiento). Lo controla <see cref="GestorPartida"/>. Ademas atenua
+        /// el sprite para que se vea deshabilitado.
+        /// </summary>
+        public bool PuedeTirar
+        {
+            get => puedeTirar;
+            set
+            {
+                puedeTirar = value;
+                float a = value ? 1f : 0.4f;
+                if (sr != null) { var c = sr.color; c.a = a; sr.color = c; }
+                if (img != null) { var c = img.color; c.a = a; img.color = c; }
+            }
+        }
+
         private SpriteRenderer sr;
         private Image img;
 
@@ -55,7 +73,7 @@ namespace Cubatis
         /// <summary>Lanza la tirada. Se ignora si ya esta girando.</summary>
         public void Tirar()
         {
-            if (Girando) return;
+            if (Girando || !puedeTirar) return;
             if (!CarasValidas()) { Debug.LogError("[Dado] Faltan sprites de caras (necesita 6)."); return; }
             StartCoroutine(RutinaTirada());
         }

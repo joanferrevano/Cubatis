@@ -22,8 +22,7 @@ namespace Cubatis
     /// </summary>
     public static class Jugadores
     {
-        public const int Maximo = 15;    // maximo logico de jugadores
-        public const int VisiblesMax = 8; // jugadores visibles en el grid (+ boton "+" = 3x3)
+        public const int Maximo = 15;    // maximo logico de jugadores (todos se muestran; el grid hace scroll)
 
         public static readonly List<Jugador> Lista = new List<Jugador>();
 

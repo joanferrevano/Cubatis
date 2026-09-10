@@ -121,6 +121,84 @@ namespace Cubatis.EditorTools
             VerificarReferencias(sj);
         }
 
+        /// <summary>
+        /// Migracion QUIRURGICA sobre la escena ABIERTA: convierte el ContenedorSlots
+        /// actual en un Scroll View vertical (ScrollRect + RectMask2D + Content con
+        /// Grid + ContentSizeFitter) SIN tocar nada mas. Conserva todos los sprites,
+        /// colores y ajustes manuales del resto de la UI.
+        ///
+        /// Menu: Cubatis > Migrar ContenedorSlots a Scroll View
+        /// </summary>
+        [MenuItem("Cubatis/Migrar ContenedorSlots a Scroll View")]
+        public static void MigrarContenedorAScrollView()
+        {
+            var sj = Object.FindFirstObjectByType<SeleccionJugadores>();
+            if (sj == null) { Debug.LogError("[Migrar] No hay SeleccionJugadores en la escena abierta."); return; }
+
+            var so = new SerializedObject(sj);
+            var contProp = so.FindProperty("contenedorSlots");
+            var scrollProp = so.FindProperty("scrollSlots");
+
+            if (scrollProp != null && scrollProp.objectReferenceValue != null)
+            { Debug.Log("[Migrar] scrollSlots ya esta asignado: la escena ya parece migrada. Nada que hacer."); return; }
+
+            var actual = contProp != null ? contProp.objectReferenceValue as Transform : null;
+            if (actual == null) { Debug.LogError("[Migrar] 'contenedorSlots' esta sin asignar. Abortado."); return; }
+
+            var viewport = (RectTransform)actual;                 // pasara a ser el Scroll View
+            var gridViejo = viewport.GetComponent<GridLayoutGroup>();
+            if (gridViejo == null) { Debug.LogError("[Migrar] '" + viewport.name + "' no tiene GridLayoutGroup. ¿Ya migrado a mano? Abortado."); return; }
+
+            // 1. Content nuevo, hijo del viewport, estirado en horizontal y anclado arriba.
+            var contGO = new GameObject("Contenido", typeof(RectTransform));
+            var contRT = (RectTransform)contGO.transform;
+            contRT.SetParent(viewport, false);
+            contRT.anchorMin = new Vector2(0f, 1f);
+            contRT.anchorMax = new Vector2(1f, 1f);
+            contRT.pivot = new Vector2(0.5f, 1f);
+            contRT.sizeDelta = Vector2.zero;
+            contRT.anchoredPosition = Vector2.zero;
+
+            // 2. Mover los hijos actuales del viewport (BotonMas, etc.) dentro del Content.
+            var hijos = new List<Transform>();
+            foreach (Transform h in viewport) if (h != contRT) hijos.Add(h);
+            foreach (var h in hijos) h.SetParent(contRT, false);
+
+            // 3. Copiar el GridLayoutGroup tal cual al Content y borrar el viejo.
+            UnityEditorInternal.ComponentUtility.CopyComponent(gridViejo);
+            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(contGO);
+            Object.DestroyImmediate(gridViejo);
+
+            // 4. ContentSizeFitter: la altura del Content crece con el numero de filas.
+            var fitter = contGO.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            // 5. Viewport: mascara + (Image transparente si no habia ninguna) + ScrollRect.
+            if (viewport.GetComponent<RectMask2D>() == null) viewport.gameObject.AddComponent<RectMask2D>();
+            if (viewport.GetComponent<Graphic>() == null)
+            {
+                var img = viewport.gameObject.AddComponent<Image>();
+                img.color = new Color(1, 1, 1, 0f);   // invisible, solo para capturar el arrastre
+            }
+            var scroll = viewport.GetComponent<ScrollRect>() ?? viewport.gameObject.AddComponent<ScrollRect>();
+            scroll.content = contRT;
+            scroll.viewport = viewport;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 32f;
+
+            // 6. Rewire de las referencias del componente.
+            contProp.objectReferenceValue = contRT;
+            if (scrollProp != null) scrollProp.objectReferenceValue = scroll;
+            so.ApplyModifiedProperties();
+
+            EditorUtility.SetDirty(sj);
+            EditorSceneManager.MarkSceneDirty(sj.gameObject.scene);
+            Debug.Log("[Migrar] ContenedorSlots convertido en Scroll View. Revisa en Play y guarda la escena (Ctrl+S).");
+        }
+
         // ===================== ESCENA =====================
         private static SeleccionJugadores ConstruirContenido(SlotJugador slotPrefab, BotonAvatar avatarPrefab, Sprite[] avatares)
         {
@@ -151,17 +229,42 @@ namespace Cubatis.EditorTools
             var titulo = NuevoTexto("Titulo", raiz, "¿QUIEN BEBE HOY?", 74, FontStyles.Bold, TextAlignmentOptions.Center);
             Anclar(titulo.rectTransform, new Vector2(0.5f, 1f), new Vector2(960, 150), new Vector2(0, -130));
 
-            var cont = NuevoUI("ContenedorSlots", raiz);
-            var contRT = (RectTransform)cont.transform;
-            Anclar(contRT, new Vector2(0.5f, 0.5f), new Vector2(960, 1040), new Vector2(0, 30));
-            var glg = cont.AddComponent<GridLayoutGroup>();
+            // ContenedorSlots = Scroll View vertical (ScrollRect + mascara) con un
+            // Content que crece en altura (ContentSizeFitter) y lleva el Grid 3 columnas.
+            var scrollGO = NuevoUI("ContenedorSlots", raiz);
+            var scrollRT = (RectTransform)scrollGO.transform;
+            Anclar(scrollRT, new Vector2(0.5f, 0.5f), new Vector2(960, 1040), new Vector2(0, 30));
+            var scrollImg = scrollGO.AddComponent<Image>();
+            scrollImg.color = new Color(1, 1, 1, 0.03f);
+            scrollGO.AddComponent<RectMask2D>();
+            var scroll = scrollGO.AddComponent<ScrollRect>();
+
+            var contGO = NuevoUI("Contenido", scrollGO.transform);
+            var contRT = (RectTransform)contGO.transform;
+            contRT.anchorMin = new Vector2(0f, 1f);
+            contRT.anchorMax = new Vector2(1f, 1f);
+            contRT.pivot = new Vector2(0.5f, 1f);
+            contRT.sizeDelta = Vector2.zero;
+            contRT.anchoredPosition = Vector2.zero;
+            var glg = contGO.AddComponent<GridLayoutGroup>();
             glg.cellSize = new Vector2(300, 320);
             glg.spacing = new Vector2(20, 22);
             glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             glg.constraintCount = 3;
             glg.childAlignment = TextAnchor.UpperCenter;
+            glg.padding = new RectOffset(0, 0, 0, 12);
+            var fitter = contGO.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            var mas = CrearBoton("BotonMas", cont.transform, "+", 130, new Color(1, 1, 1, 0.14f));
+            scroll.content = contRT;
+            scroll.viewport = scrollRT;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 32f;
+
+            var mas = CrearBoton("BotonMas", contGO.transform, "+", 130, new Color(1, 1, 1, 0.14f));
 
             var empezar = CrearBoton("BotonEmpezar", raiz, "EMPEZAR", 60, new Color(0.95f, 0.35f, 0.55f));
             Anclar((RectTransform)empezar.transform, new Vector2(0.5f, 0f), new Vector2(720, 160), new Vector2(0, 140));
@@ -203,6 +306,7 @@ namespace Cubatis.EditorTools
             var sj = canvasGO.AddComponent<SeleccionJugadores>();
             var so = new SerializedObject(sj);
             Asignar(so, "contenedorSlots", contRT);
+            Asignar(so, "scrollSlots", scroll);
             Asignar(so, "prefabSlot", slotPrefab);
             Asignar(so, "botonMas", mas.gameObject);
             Asignar(so, "botonAbrirPopup", mas);
@@ -236,7 +340,7 @@ namespace Cubatis.EditorTools
             var so = new SerializedObject(sj);
             string[] refs =
             {
-                "contenedorSlots", "prefabSlot", "botonMas", "botonEmpezar", "popup",
+                "contenedorSlots", "scrollSlots", "prefabSlot", "botonMas", "botonEmpezar", "popup",
                 "contenedorAvatares", "prefabBotonAvatar", "campoNombre", "botonAceptar",
                 "botonCerrarPopup", "botonAbrirPopup"
             };
