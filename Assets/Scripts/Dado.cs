@@ -24,6 +24,11 @@ namespace Cubatis
         [Header("Caras (indice 0 = cara 1 ... indice 5 = cara 6)")]
         [SerializeField] private Sprite[] caras = new Sprite[6];
 
+        [Header("Dibujo")]
+        [Tooltip("Orden de dibujo del dado. Alto para que quede SIEMPRE por encima del fondo, el tablero y las fichas.")]
+        [SerializeField] private int ordenDibujo = 1000;
+        [SerializeField] private string sortingLayer = "Default";
+
         [Header("Animacion")]
         [Tooltip("Duracion total de la tirada en segundos.")]
         [SerializeField] private float duracion = 0.8f;
@@ -64,7 +69,20 @@ namespace Cubatis
         {
             sr = GetComponent<SpriteRenderer>();
             img = GetComponent<Image>();
+            AplicarOrden();
         }
+
+        private void AplicarOrden()
+        {
+            var r = sr != null ? sr : GetComponent<SpriteRenderer>();
+            if (r == null) return;
+            if (!string.IsNullOrEmpty(sortingLayer)) r.sortingLayerName = sortingLayer;
+            r.sortingOrder = ordenDibujo;
+        }
+
+#if UNITY_EDITOR
+        private void OnValidate() => AplicarOrden();
+#endif
 
         // --- Entradas -----------------------------------------------------
         public void OnPointerClick(PointerEventData _) => Tirar();       // UI Image / con EventSystem
