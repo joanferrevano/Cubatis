@@ -186,12 +186,20 @@ namespace Cubatis
 
             int numero = (tipo == TipoCasilla.Start || tipo == TipoCasilla.End) ? 0 : indice;
 
+            // START ocupa 2 celdas y comparte borde con casillas del camino cuyo
+            // orden (indice*2) es mayor que el suyo: con indice 0 quedaria dibujado
+            // POR DEBAJO y tapado. Se sube por encima de todo el camino, igual que
+            // END (indice mas alto) ya queda por encima de forma natural.
+            int orden = tipo == TipoCasilla.Start
+                ? ordenBase + CeldasNumeradas * 2 + 1
+                : ordenBase + indice * 2;
+
             var go = new GameObject($"Casilla_{indice:D2}_{tipo}");
             go.transform.SetParent(padre, false);
             var casilla = go.AddComponent<Casilla>();
             casilla.Construir(sprite, esquina, unidadesPorPixel, indice, numero, tipo,
-                crearColliders, sortingLayer, ordenBase + indice * 2);
-            casilla.CrearNumero(tamanoNumero, colorNumero, mostrarNumeros, sortingLayer, ordenBase + indice * 2 + 1);
+                crearColliders, sortingLayer, orden);
+            casilla.CrearNumero(tamanoNumero, colorNumero, mostrarNumeros, sortingLayer, orden + 1);
 
             casillas.Add(casilla);
         }
