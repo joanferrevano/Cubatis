@@ -19,8 +19,10 @@ namespace Cubatis
     ///     casilla (via <see cref="MovimientoFicha"/>) parando como muy lejos
     ///     en END.
     ///
-    /// SOLO movimiento + turnos. La logica de "que pasa al caer en la casilla"
-    /// se enganchara en <see cref="AlCaerEnCasilla"/> / <see cref="alCaerEnCasilla"/>.
+    ///   - Al caer en una casilla numerada, si hay <see cref="CartaReto"/>
+    ///     asignada abre su popup y el turno queda en pausa hasta que el jugador
+    ///     cierre la carta (<see cref="FinalizarTurno"/>). El evento suelto
+    ///     <see cref="alCaerEnCasilla"/> se sigue emitiendo por si algo mas lo usa.
     /// </summary>
     [DisallowMultipleComponent]
     public class GestorPartida : MonoBehaviour
@@ -29,6 +31,8 @@ namespace Cubatis
         [SerializeField] private GeneradorTablero tablero;
         [SerializeField] private MovimientoFicha movimiento;
         [SerializeField] private Dado dado;
+        [Tooltip("Popup de carta de reto. Si esta asignado, al caer en una casilla numerada se abre y el turno no pasa hasta cerrarla.")]
+        [SerializeField] private CartaReto carta;
 
         [Header("Fichas")]
         [Tooltip("Mismos sprites que la pantalla de seleccion; Jugador.avatar indexa aqui.")]
@@ -46,8 +50,8 @@ namespace Cubatis
         [SerializeField] private bool jugadoresDePruebaSiVacio = true;
         [SerializeField] private int jugadoresDePrueba = 3;
 
-        [Header("Gancho: al caer en una casilla (pendiente de implementar)")]
-        [Tooltip("Se invoca al terminar el movimiento con (indiceJugador, casillaDestino). De momento no lo escucha nadie.")]
+        [Header("Gancho: al caer en una casilla")]
+        [Tooltip("Se invoca al terminar el movimiento con (indiceJugador, casillaDestino). La carta de reto se abre aparte via la referencia 'carta'; este evento es para logica extra opcional.")]
         public UnityEvent<int, Casilla> alCaerEnCasilla;
 
         private readonly List<Transform> fichas = new List<Transform>();
@@ -62,6 +66,7 @@ namespace Cubatis
             tablero = FindAnyObjectByType<GeneradorTablero>();
             movimiento = FindAnyObjectByType<MovimientoFicha>();
             dado = FindAnyObjectByType<Dado>();
+            carta = FindAnyObjectByType<CartaReto>();
         }
 
         private void Awake()
@@ -69,6 +74,7 @@ namespace Cubatis
             if (tablero == null) tablero = FindAnyObjectByType<GeneradorTablero>();
             if (movimiento == null) movimiento = FindAnyObjectByType<MovimientoFicha>();
             if (dado == null) dado = FindAnyObjectByType<Dado>();
+            if (carta == null) carta = FindAnyObjectByType<CartaReto>();
         }
 
         private void OnEnable()
@@ -188,12 +194,24 @@ namespace Cubatis
                 SepararFichasEn(origen);
                 SepararFichasEn(destino);
 
-                AlCaerEnCasilla(jugador, tablero.ObtenerCasilla(destino));
+                Casilla casilla = tablero.ObtenerCasilla(destino);
+                AlCaerEnCasilla(jugador, casilla);
 
-                turno = (turno + 1) % Jugadores.Cuenta;   // pasa el turno; vuelve al 0 tras el ultimo
-                ocupado = false;
-                ActualizarDado();
+                // Casilla numerada con carta -> abre el popup y NO pasa el turno
+                // (ni desbloquea el dado) hasta que el jugador la cierre.
+                if (carta != null && casilla != null && casilla.EsNumerada && carta.TieneCarta(casilla.Tipo))
+                    carta.Abrir(casilla.Tipo, FinalizarTurno);
+                else
+                    FinalizarTurno();
             });
+        }
+
+        // Pasa el turno al siguiente jugador y vuelve a habilitar el dado.
+        private void FinalizarTurno()
+        {
+            turno = (turno + 1) % Jugadores.Cuenta;   // vuelve al 0 tras el ultimo
+            ocupado = false;
+            ActualizarDado();
         }
 
         /// <summary>
