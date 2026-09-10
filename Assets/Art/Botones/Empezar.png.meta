@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7df17fd2345624341a88be3a84edb72b
+guid: 9bec433b4c8e2dc4f88587d0897e1407
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -569948925643974366
-    second: avatar_10_0
+      213: -4727648549151681096
+    second: Empezar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -141,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: avatar_10_0
+      name: Empezar_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 506
-        height: 506
+        width: 1440
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,8 +156,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 22910eac8722718f0800000000000000
-      internalID: -569948925643974366
+      spriteID: 8b55ce451b4046eb0800000000000000
+      internalID: -4727648549151681096
       vertices: []
       indices: 
       edges: []
@@ -176,7 +176,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      avatar_10_0: -569948925643974366
+      Empezar_0: -4727648549151681096
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
