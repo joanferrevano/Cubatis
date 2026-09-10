@@ -59,15 +59,31 @@ namespace Cubatis
 
             Bounds b = Limites();
             camara.orthographic = true;
-
-            float ancho = (b.size.x + margenHorizontal * 2f) * (1f + margenPorcentual);
-            float size = ancho / (2f * Mathf.Max(0.001f, camara.aspect));
-            if (modo == Modo.AjustarTodo)
-                size = Mathf.Max(size, b.size.y * (1f + margenPorcentual) / 2f);
-
-            camara.orthographicSize = size;
+            camara.orthographicSize = TamanoOrtografico(camara.aspect, b);
             camara.transform.position = new Vector3(b.center.x, b.center.y + offsetVertical, distanciaZ);
             ultimoAspecto = camara.aspect;
+        }
+
+        /// <summary>
+        /// orthographicSize que tendria la camara para un <paramref name="aspect"/>
+        /// dado, con la MISMA logica que <see cref="Ajustar"/> y sin tocar la
+        /// camara. Lo usa la vista previa de <see cref="CartaReto"/> para calcular
+        /// exactamente lo que se vera en Play (aspect de la ventana Game).
+        /// </summary>
+        public float TamanoOrtografico(float aspect)
+        {
+            if (tablero == null || tablero.Total == 0)
+                return camara != null ? camara.orthographicSize : 5f;
+            return TamanoOrtografico(aspect, Limites());
+        }
+
+        private float TamanoOrtografico(float aspect, Bounds b)
+        {
+            float ancho = (b.size.x + margenHorizontal * 2f) * (1f + margenPorcentual);
+            float size = ancho / (2f * Mathf.Max(0.001f, aspect));
+            if (modo == Modo.AjustarTodo)
+                size = Mathf.Max(size, b.size.y * (1f + margenPorcentual) / 2f);
+            return size;
         }
 
         private Bounds Limites()
