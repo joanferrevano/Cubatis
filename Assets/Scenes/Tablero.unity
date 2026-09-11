@@ -19071,7 +19071,11 @@ MonoBehaviour:
   ordenFichas: 500
   jugadoresDePruebaSiVacio: 1
   jugadoresDePrueba: 3
+  escenaRanking: Ranking
   alCaerEnCasilla:
+    m_PersistentCalls:
+      m_Calls: []
+  alTerminarJuego:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1608801054

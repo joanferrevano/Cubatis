@@ -1384,6 +1384,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794834826}
   m_CullTransparentMesh: 1
+--- !u!1 &990000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990000002}
+  - component: {fileID: 990000003}
+  m_Layer: 0
+  m_Name: RankingUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &990000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &990000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0307af8f2084aa68ace8407c7b84b51, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.RankingUI
+  avatares: []
+  jugadorTop1: {fileID: 468233533}
+  jugadorTop2: {fileID: 879457255}
+  jugadorTop3: {fileID: 200509616}
+  botonVolverMenu: {fileID: 1794834828}
+  escenaMenu: MenuPrincipal
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1391,3 +1441,4 @@ SceneRoots:
   - {fileID: 933227396}
   - {fileID: 1008454920}
   - {fileID: 394779613}
+  - {fileID: 990000002}

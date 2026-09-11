@@ -13,9 +13,9 @@ EditorBuildSettings:
     guid: 5710df576bdb428d8822c058c862bc2c
   - enabled: 1
     path: Assets/Scenes/Ranking.unity
-    guid: d04b15ca74e454b46bdba9a8b1a8a64b
-  - enabled: 1
-    path: Assets/Scenes/Ranking.unity
     guid: ab3a845988bdb534581674ccef0404f9
+  - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: b7fe7b7cd10e4725b758ed7dc8f308c4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -45,7 +45,42 @@ namespace Cubatis
             rutina = StartCoroutine(RutinaMover(ficha, origen, destino, alTerminar));
         }
 
+        /// <summary>
+        /// Como <see cref="Mover"/> pero en DOS tramos visibles: primero avanza
+        /// casilla a casilla de 'origen' a 'intermedio' (la casilla final END) y
+        /// luego, encadenado, retrocede casilla a casilla de 'intermedio' a
+        /// 'destino' (el sobrante del rebote). Si 'intermedio' == 'destino' no hay
+        /// segundo tramo y se comporta igual que <see cref="Mover"/>.
+        /// </summary>
+        public void MoverConRebote(Transform ficha, int origen, int intermedio, int destino, Action alTerminar = null)
+        {
+            if (ficha == null) return;
+            intermedio = Mathf.Clamp(intermedio, 0, tablero.Total - 1);
+            destino = Mathf.Clamp(destino, 0, tablero.Total - 1);
+            if (rutina != null) StopCoroutine(rutina);
+            rutina = StartCoroutine(RutinaMoverConRebote(ficha, origen, intermedio, destino, alTerminar));
+        }
+
         private IEnumerator RutinaMover(Transform ficha, int origen, int destino, Action alTerminar)
+        {
+            yield return RecorrerTramo(ficha, origen, destino);
+            rutina = null;
+            alTerminar?.Invoke();
+        }
+
+        private IEnumerator RutinaMoverConRebote(Transform ficha, int origen, int intermedio, int destino, Action alTerminar)
+        {
+            yield return RecorrerTramo(ficha, origen, intermedio);      // tramo de ida (hasta END)
+            if (intermedio != destino)
+                yield return RecorrerTramo(ficha, intermedio, destino);  // tramo de vuelta (el rebote)
+            rutina = null;
+            alTerminar?.Invoke();
+        }
+
+        // Tramo puro casilla a casilla de 'origen' a 'destino' (sin tocar 'rutina'
+        // ni invocar 'alTerminar'): lo reutilizan Mover y MoverConRebote para
+        // poder encadenar dos tramos seguidos en un mismo rebote.
+        private IEnumerator RecorrerTramo(Transform ficha, int origen, int destino)
         {
             int paso = origen < destino ? 1 : -1;
             for (int i = origen; i != destino; i += paso)
@@ -54,8 +89,6 @@ namespace Cubatis
                 if (tablero.EsIndiceValido(i + paso))
                     alLlegarACasilla?.Invoke(ficha, tablero.ObtenerCasilla(i + paso));
             }
-            rutina = null;
-            alTerminar?.Invoke();
         }
 
         private IEnumerator SaltarA(Transform ficha, int indice)

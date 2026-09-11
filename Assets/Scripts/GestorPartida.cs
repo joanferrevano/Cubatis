@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
@@ -16,13 +18,22 @@ namespace Cubatis
     ///   - Solo se puede tirar el dado en el turno actual y con nada en
     ///     movimiento; el resto del tiempo el dado queda bloqueado.
     ///   - Al salir resultado, mueve la ficha del jugador de turno casilla a
-    ///     casilla (via <see cref="MovimientoFicha"/>) parando como muy lejos
-    ///     en END.
+    ///     casilla (via <see cref="MovimientoFicha"/>); ver "Victoria" abajo
+    ///     para que pasa si la tirada se pasa de END.
     ///
     ///   - Al caer en una casilla numerada, si hay <see cref="CartaReto"/>
     ///     asignada abre su popup y el turno queda en pausa hasta que el jugador
     ///     cierre la carta (<see cref="FinalizarTurno"/>). El evento suelto
     ///     <see cref="alCaerEnCasilla"/> se sigue emitiendo por si algo mas lo usa.
+    ///
+    ///   - Victoria: si la tirada se pasa de la casilla final (END), la ficha
+    ///     avanza hasta el final y RETROCEDE el sobrante en vez de salirse del
+    ///     tablero (regla clasica del juego de la oca). Solo gana si cae EXACTO
+    ///     en END (sobrante = 0); ese jugador dispara <see cref="alTerminarJuego"/>,
+    ///     se guarda en <see cref="DatosPartida"/> y se carga la escena de
+    ///     Ranking. La partida queda bloqueada (no se pasa turno ni se
+    ///     desbloquea el dado). El ranking con 2o/3o puesto (varios ganadores
+    ///     seguidos en vez de terminar al primero) se implementa mas adelante.
     /// </summary>
     [DisallowMultipleComponent]
     public class GestorPartida : MonoBehaviour
@@ -50,14 +61,24 @@ namespace Cubatis
         [SerializeField] private bool jugadoresDePruebaSiVacio = true;
         [SerializeField] private int jugadoresDePrueba = 3;
 
+        [Header("Navegacion")]
+        [Tooltip("Escena a la que se salta al terminar la partida (ranking final).")]
+        [SerializeField] private string escenaRanking = "Ranking";
+
         [Header("Gancho: al caer en una casilla")]
         [Tooltip("Se invoca al terminar el movimiento con (indiceJugador, casillaDestino). La carta de reto se abre aparte via la referencia 'carta'; este evento es para logica extra opcional.")]
         public UnityEvent<int, Casilla> alCaerEnCasilla;
 
+        [Header("Gancho: fin de partida")]
+        [Tooltip("Se invoca cuando un jugador gana (cae EXACTO en la casilla final), con la lista de jugadores en orden de llegada. De momento solo trae al ganador: el ranking completo (2o, 3o...) se implementara mas adelante.")]
+        public UnityEvent<List<Jugador>> alTerminarJuego;
+
         private readonly List<Transform> fichas = new List<Transform>();
         private readonly List<int> posiciones = new List<int>();   // indice de casilla de cada ficha
+        private readonly List<Jugador> ordenLlegada = new List<Jugador>();
         private int turno;
-        private bool ocupado;   // tirada o movimiento en curso
+        private bool ocupado;     // tirada o movimiento en curso
+        private bool terminado;   // ya gano alguien: partida bloqueada
 
         public int TurnoActual => turno;
 
@@ -178,17 +199,36 @@ namespace Cubatis
         // ===================== TURNOS + DADO =====================
         private void OnResultadoDado(int resultado)
         {
-            if (ocupado || !enabled) return;
+            if (ocupado || terminado || !enabled) return;
 
             ocupado = true;
             ActualizarDado();
 
             int jugador = turno;
             int origen = posiciones[jugador];
-            int destino = Mathf.Clamp(origen + resultado, 0, tablero.Total - 1);   // nunca pasa de END
+            int casillaFinal = tablero.Total - 1;   // END
+            int suma = origen + resultado;
+
+            // Si la tirada se pasa de la casilla final, la ficha avanza hasta el
+            // final y retrocede el sobrante en vez de salirse del tablero (regla
+            // del rebote). Solo gana si cae EXACTO en END (sobrante == 0).
+            int destino;
+            bool gana;
+            if (suma >= casillaFinal)
+            {
+                int sobrante = suma - casillaFinal;
+                destino = Mathf.Clamp(casillaFinal - sobrante, 0, casillaFinal);
+                gana = sobrante == 0;
+            }
+            else
+            {
+                destino = suma;
+                gana = false;
+            }
+
             Transform ficha = fichas[jugador];
 
-            movimiento.Mover(ficha, origen, destino, () =>
+            Action alLlegar = () =>
             {
                 posiciones[jugador] = destino;
                 SepararFichasEn(origen);
@@ -197,13 +237,33 @@ namespace Cubatis
                 Casilla casilla = tablero.ObtenerCasilla(destino);
                 AlCaerEnCasilla(jugador, casilla);
 
+                if (gana)
+                {
+                    // Partida terminada: se deja 'ocupado' a true (dado bloqueado)
+                    // y no se pasa turno.
+                    terminado = true;
+                    ordenLlegada.Add(Jugadores.Lista[jugador]);
+                    alTerminarJuego?.Invoke(ordenLlegada);
+
+                    DatosPartida.GuardarRanking(ordenLlegada);
+                    SceneManager.LoadScene(escenaRanking);
+                    return;
+                }
+
                 // Casilla numerada con carta -> abre el popup y NO pasa el turno
                 // (ni desbloquea el dado) hasta que el jugador la cierre.
                 if (carta != null && casilla != null && casilla.EsNumerada && carta.TieneCarta(casilla.Tipo))
                     carta.Abrir(casilla.Tipo, FinalizarTurno);
                 else
                     FinalizarTurno();
-            });
+            };
+
+            // Rebote real (la tirada se paso de END) -> animacion en dos tramos
+            // visibles: ida hasta la casilla final y vuelta hasta 'destino'.
+            if (suma > casillaFinal)
+                movimiento.MoverConRebote(ficha, origen, casillaFinal, destino, alLlegar);
+            else
+                movimiento.Mover(ficha, origen, destino, alLlegar);
         }
 
         // Pasa el turno al siguiente jugador y vuelve a habilitar el dado.
