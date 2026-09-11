@@ -144,10 +144,10 @@ TextureImporter:
       name: evento 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1002
-        height: 1780
+        x: 77
+        y: 141
+        width: 925
+        height: 1639
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

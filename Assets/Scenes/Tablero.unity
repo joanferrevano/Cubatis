@@ -11380,11 +11380,11 @@ MonoBehaviour:
     - "Beber \xB7 frase de ejemplo 1 (sustituir)"
     - "Beber \xB7 frase de ejemplo 2 (sustituir)"
     - "Beber \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0.024205195, y: -0.007850333}
-    escalaCarta: 1.0846528
-    offsetTexto: {x: -0.037112605, y: 0.1323551}
-    zonaTexto: {x: 0.71912414, y: 0.460977}
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.6180798, y: 0.6180798}
+    posTexto: {x: 0, y: 2.1355524}
+    tamTexto: {x: 4.845127, y: 5.5040007}
+    configurada: 1
   - tipo: 5
     portada: {fileID: 8005103946394517171, guid: bcad39c1e7549d640b3f8a876796ec60, type: 3}
     plantilla: {fileID: -5551357444587061719, guid: 6f38199d688470b42a460b02a33c4699, type: 3}
@@ -11392,11 +11392,11 @@ MonoBehaviour:
     - "Evento \xB7 frase de ejemplo 1 (sustituir)"
     - "Evento \xB7 frase de ejemplo 2 (sustituir)"
     - "Evento \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0, y: 0}
-    escalaCarta: 1
-    offsetTexto: {x: 0.0032118983, y: 0.19807555}
-    zonaTexto: {x: 0.7799999, y: 0.5}
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.670402, y: 0.670402}
+    posTexto: {x: 0, y: 2.1355522}
+    tamTexto: {x: 4.8578663, y: 5.504}
+    configurada: 1
   - tipo: 6
     portada: {fileID: -1020366611377937018, guid: a63b700e7fd62a34fac6eed01ecf85ab, type: 3}
     plantilla: {fileID: 216851716356719090, guid: ecbfd9cb1daa12e419df94477f114935, type: 3}
@@ -11404,11 +11404,11 @@ MonoBehaviour:
     - "Hot \xB7 frase de ejemplo 1 (sustituir)"
     - "Hot \xB7 frase de ejemplo 2 (sustituir)"
     - "Hot \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0, y: 0}
-    escalaCarta: 1
-    offsetTexto: {x: 0.0032153593, y: 0.1917153}
-    zonaTexto: {x: 0.7799999, y: 0.5}
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.670402, y: 0.670402}
+    posTexto: {x: 0, y: 2.1355522}
+    tamTexto: {x: 4.8526373, y: 5.504}
+    configurada: 1
   - tipo: 4
     portada: {fileID: 3693002286276395167, guid: ca08abe79d353dc42aea5d9283f1defb, type: 3}
     plantilla: {fileID: 152406670805455862, guid: cf66064c3dc78874384d4a5acc61f7e5, type: 3}
@@ -11416,11 +11416,11 @@ MonoBehaviour:
     - "Reto \xB7 frase de ejemplo 1 (sustituir)"
     - "Reto \xB7 frase de ejemplo 2 (sustituir)"
     - "Reto \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0, y: 0}
-    escalaCarta: 1
-    offsetTexto: {x: 0, y: 0.19625834}
-    zonaTexto: {x: 0.7799999, y: 0.5}
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.670402, y: 0.670402}
+    posTexto: {x: 0, y: 2.1355522}
+    tamTexto: {x: 4.8578663, y: 5.504}
+    configurada: 1
   - tipo: 3
     portada: {fileID: -4542408732484108522, guid: 7971964bc7f51094684b0057889f3e8a, type: 3}
     plantilla: {fileID: -8340873178334943318, guid: e01509af805eaea4cb1b8043ae8c4049, type: 3}
@@ -11428,11 +11428,11 @@ MonoBehaviour:
     - "Verdad \xB7 frase de ejemplo 1 (sustituir)"
     - "Verdad \xB7 frase de ejemplo 2 (sustituir)"
     - "Verdad \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0, y: 0}
-    escalaCarta: 1
-    offsetTexto: {x: -0.008029746, y: 0.18898949}
-    zonaTexto: {x: 0.7799999, y: 0.5}
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.670402, y: 0.670402}
+    posTexto: {x: 0, y: 2.1355522}
+    tamTexto: {x: 4.8578663, y: 5.504}
+    configurada: 1
   - tipo: 2
     portada: {fileID: 5263495900794470976, guid: 56aebba56e801b846850ef7783367a47, type: 3}
     plantilla: {fileID: -6941100112406018268, guid: 3a8c34c1cb070034ea9e02463ac82265, type: 3}
@@ -11440,24 +11440,25 @@ MonoBehaviour:
     - "YoNunca \xB7 frase de ejemplo 1 (sustituir)"
     - "YoNunca \xB7 frase de ejemplo 2 (sustituir)"
     - "YoNunca \xB7 frase de ejemplo 3 (sustituir)"
-    ajustePropio: 1
-    offsetCarta: {x: 0, y: 0}
-    escalaCarta: 1
-    offsetTexto: {x: 0, y: 0.19353253}
-    zonaTexto: {x: 0.7799999, y: 0.5}
-  altoRelativoPantalla: 0.72
+    posCarta: {x: 0, y: 0}
+    escalaCarta: {x: 0.6702742, y: 0.6702742}
+    posTexto: {x: 0, y: 2.1351452}
+    tamTexto: {x: 4.851712, y: 5.502951}
+    configurada: 1
+  altoRelativoPantallaSemilla: 0.72
+  zonaTextoSemilla: {x: 0.7799999, y: 0.5}
+  offsetTextoSemilla: {x: 0, y: 0.194}
   offsetMundo: {x: 0, y: 0, z: 0}
   colorFondo: {r: 0, g: 0, b: 0, a: 0.78}
   fuenteReto: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
   tamanoTexto: 3.2
   colorTexto: {r: 0, g: 0, b: 0, a: 1}
-  zonaTexto: {x: 0.7799999, y: 0.5}
-  offsetTexto: {x: -0.040254287, y: 0.13083889}
   duracionFlip: 0.28
   ordenDibujo: 2000
   sortingLayer: Default
   categoriaVistaPrevia: 1
   vistaPreviaActiva: 1
+  vistaPreviaMuestraPlantilla: 1
 --- !u!4 &996287037
 Transform:
   m_ObjectHideFlags: 0
