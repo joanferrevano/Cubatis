@@ -12,8 +12,11 @@ namespace Cubatis
     /// <summary>
     /// Logica de la escena Ranking: pinta el avatar de los 3 primeros de
     /// <see cref="DatosPartida.Ranking"/> (orden de llegada al ganar la
-    /// partida) en 'JugadorTop1/2/3' (SpriteRenderer, no Image: asi estan
-    /// montados en la escena) y el boton para volver al menu.
+    /// partida) en 'JugadorTop1/2/3' (Image de UI, igual que 'Top1/2/3' y el
+    /// resto de la escena: un Canvas Screen Space - Overlay no depende de la
+    /// camara para dibujar sus Image/Text/Button, pero un SpriteRenderer si;
+    /// por eso antes salian invisibles aunque el sprite se asignara bien) y el
+    /// boton para volver al menu.
     ///
     /// Si hay menos de 3 jugadores en el ranking (hoy siempre es asi: la
     /// partida termina con el primer ganador, ver <see cref="GestorPartida"/>)
@@ -28,9 +31,9 @@ namespace Cubatis
         [SerializeField] private Sprite[] avatares;
 
         [Header("Puestos")]
-        [SerializeField] private SpriteRenderer jugadorTop1;
-        [SerializeField] private SpriteRenderer jugadorTop2;
-        [SerializeField] private SpriteRenderer jugadorTop3;
+        [SerializeField] private Image jugadorTop1;
+        [SerializeField] private Image jugadorTop2;
+        [SerializeField] private Image jugadorTop3;
 
         [Header("Navegacion")]
         [SerializeField] private Button botonVolverMenu;
@@ -53,12 +56,12 @@ namespace Cubatis
             AsignarPuesto(jugadorTop3, ranking, 2);
         }
 
-        private void AsignarPuesto(SpriteRenderer sr, IReadOnlyList<Jugador> ranking, int puesto)
+        private void AsignarPuesto(Image img, IReadOnlyList<Jugador> ranking, int puesto)
         {
-            if (sr == null) return;
+            if (img == null) return;
             bool hayJugador = ranking != null && puesto < ranking.Count;
-            sr.gameObject.SetActive(hayJugador);
-            if (hayJugador) sr.sprite = AvatarDe(ranking[puesto].avatar);
+            img.gameObject.SetActive(hayJugador);
+            if (hayJugador) img.sprite = AvatarDe(ranking[puesto].avatar);
         }
 
         private Sprite AvatarDe(int i)
