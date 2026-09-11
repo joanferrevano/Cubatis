@@ -59,6 +59,8 @@ namespace Cubatis
         [Tooltip("Tamano maximo; si la frase no cabe en la carta se reduce sola.")]
         [SerializeField] private float tamanoTexto = 3.2f;
         [SerializeField] private Color colorTexto = Color.black;
+        [Tooltip("Desplazamiento vertical del texto respecto al centro de la carta (unidades de mundo).")]
+        public float offsetVerticalTexto = 0f;
 
         [Header("Animacion de giro")]
         [SerializeField] private float duracionFlip = 0.28f;
@@ -227,7 +229,7 @@ namespace Cubatis
             cartaSr.sprite = s;
 
             texto.gameObject.SetActive(conTexto);
-            texto.transform.localPosition = new Vector3(0f, 0f, -0.01f);
+            texto.transform.localPosition = new Vector3(0f, offsetVerticalTexto, -0.01f);
             texto.rectTransform.sizeDelta = tamReal * (escala * ZonaTexto);
             if (fuenteReto != null) texto.font = fuenteReto;
             texto.color = colorTexto;
