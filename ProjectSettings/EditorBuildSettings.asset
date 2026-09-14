@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Tablero.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
     path: Assets/Scenes/SeleccionJugadores.unity
     guid: 5710df576bdb428d8822c058c862bc2c
   - enabled: 1
+    path: Assets/Scenes/Tablero.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
     path: Assets/Scenes/Ranking.unity
     guid: ab3a845988bdb534581674ccef0404f9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MenuPrincipal.unity
     guid: b7fe7b7cd10e4725b758ed7dc8f308c4
   m_configObjects:

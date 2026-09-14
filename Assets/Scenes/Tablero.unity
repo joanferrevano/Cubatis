@@ -5996,7 +5996,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.6429877
+  orthographic size: 7.645981
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7543,7 +7543,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.02, y: 0.47, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -19064,7 +19064,17 @@ MonoBehaviour:
   movimiento: {fileID: 1200000004}
   dado: {fileID: 1743511257}
   carta: {fileID: 996287036}
-  avatares: []
+  avatares:
+  - {fileID: 6737808805742536195, guid: b309f1dc0fc890e4f91f8690d0731c0d, type: 3}
+  - {fileID: 238373920971241599, guid: 8dca36334a1643045b761897829853b5, type: 3}
+  - {fileID: -4724325490436756100, guid: 527abe4ca5008634d9f1e6513a0fc759, type: 3}
+  - {fileID: -543022506438476229, guid: 498ef31614792a34cb6410dc40cdd98c, type: 3}
+  - {fileID: 5966165490281052084, guid: 6ea2b6b466940f24392dc402559ef937, type: 3}
+  - {fileID: 1910251358401907814, guid: 05a3d46936b116546990156fcae08a88, type: 3}
+  - {fileID: -3911590193339215671, guid: 6e84b60bd0ce7644983d2e0a5eb3d5d7, type: 3}
+  - {fileID: -6995643724514199987, guid: ab561d362628d2e49ac0e4d5334c94e8, type: 3}
+  - {fileID: -569948925643974366, guid: 7df17fd2345624341a88be3a84edb72b, type: 3}
+  - {fileID: -4252144922562825746, guid: 476b42dc215a583499eeb7d04e2c2241, type: 3}
   tamanoFicha: 0.45
   separacionFichas: 0.18
   sortingLayerFichas: Default
