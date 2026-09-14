@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -65,6 +66,14 @@ namespace Cubatis
         [Tooltip("Escena a la que se salta al terminar la partida (ranking final).")]
         [SerializeField] private string escenaRanking = "Ranking";
 
+        [Header("UI: turno actual")]
+        [Tooltip("Texto (TMP) 'NombreJugador': solo el nombre, la etiqueta 'Turno del Jugador' es otro texto aparte. Se actualiza al empezar la partida y en cada cambio de turno.")]
+        [SerializeField] private TMP_Text nombreJugadorTexto;
+
+        [Header("Gancho: cambio de turno")]
+        [Tooltip("Se invoca al empezar la partida (primer jugador) y cada vez que pasa el turno, con el jugador que le toca jugar.")]
+        public UnityEvent<Jugador> alCambiarTurno;
+
         [Header("Gancho: al caer en una casilla")]
         [Tooltip("Se invoca al terminar el movimiento con (indiceJugador, casillaDestino). La carta de reto se abre aparte via la referencia 'carta'; este evento es para logica extra opcional.")]
         public UnityEvent<int, Casilla> alCaerEnCasilla;
@@ -124,6 +133,7 @@ namespace Cubatis
             CrearFichas();
             turno = 0;
             ActualizarDado();
+            ActualizarNombreJugador();
         }
 
         private bool Validar()
@@ -272,6 +282,16 @@ namespace Cubatis
             turno = (turno + 1) % Jugadores.Cuenta;   // vuelve al 0 tras el ultimo
             ocupado = false;
             ActualizarDado();
+            ActualizarNombreJugador();
+        }
+
+        // Refleja el jugador en turno en el texto de UI y avisa via 'alCambiarTurno'
+        // (por si algun otro sistema quiere reaccionar, igual que con alCaerEnCasilla).
+        private void ActualizarNombreJugador()
+        {
+            Jugador j = Jugadores.Lista[turno];
+            if (nombreJugadorTexto != null) nombreJugadorTexto.text = j.nombre;
+            alCambiarTurno?.Invoke(j);
         }
 
         /// <summary>
