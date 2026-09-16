@@ -863,7 +863,7 @@ MonoBehaviour:
   jugadorTop2: {fileID: 879457255}
   jugadorTop3: {fileID: 200509616}
   botonVolverMenu: {fileID: 1794834828}
-  escenaMenu: MenuPrincipal
+  escenaMenu: SeleccionJugadores
 --- !u!1 &1008454916
 GameObject:
   m_ObjectHideFlags: 0
