@@ -1820,7 +1820,7 @@ MonoBehaviour:
   - {fileID: -6995643724514199987, guid: ab561d362628d2e49ac0e4d5334c94e8, type: 3}
   - {fileID: -569948925643974366, guid: 7df17fd2345624341a88be3a84edb72b, type: 3}
   - {fileID: -4252144922562825746, guid: 476b42dc215a583499eeb7d04e2c2241, type: 3}
-  escenaTablero: Tablero
+  escenaTablero: ModosJuegos
   empezarConListaVacia: 1
 --- !u!114 &1447726462
 MonoBehaviour:
