@@ -33,8 +33,10 @@ namespace Cubatis
     ///     en END (sobrante = 0); ese jugador dispara <see cref="alTerminarJuego"/>,
     ///     se guarda en <see cref="DatosPartida"/> y se carga la escena de
     ///     Ranking. La partida queda bloqueada (no se pasa turno ni se
-    ///     desbloquea el dado). El ranking con 2o/3o puesto (varios ganadores
-    ///     seguidos en vez de terminar al primero) se implementa mas adelante.
+    ///     desbloquea el dado). El resto de jugadores no sigue jugando, asi
+    ///     que el 2o/3o puesto (y siguientes) se completan con su casilla
+    ///     actual en ese momento (el mas avanzado, mejor puesto) en vez de
+    ///     dejarlos fuera del ranking (ver <see cref="Ganar"/>).
     /// </summary>
     [DisallowMultipleComponent]
     public class GestorPartida : MonoBehaviour
@@ -79,7 +81,7 @@ namespace Cubatis
         public UnityEvent<int, Casilla> alCaerEnCasilla;
 
         [Header("Gancho: fin de partida")]
-        [Tooltip("Se invoca cuando un jugador gana (cae EXACTO en la casilla final), con la lista de jugadores en orden de llegada. De momento solo trae al ganador: el ranking completo (2o, 3o...) se implementara mas adelante.")]
+        [Tooltip("Se invoca cuando un jugador gana (cae EXACTO en la casilla final), con la lista de jugadores en orden de llegada: el ganador primero, seguido del resto ordenado por su casilla actual (el mas avanzado, mejor puesto).")]
         public UnityEvent<List<Jugador>> alTerminarJuego;
 
         private readonly List<Transform> fichas = new List<Transform>();
@@ -251,12 +253,7 @@ namespace Cubatis
                 {
                     // Partida terminada: se deja 'ocupado' a true (dado bloqueado)
                     // y no se pasa turno.
-                    terminado = true;
-                    ordenLlegada.Add(Jugadores.Lista[jugador]);
-                    alTerminarJuego?.Invoke(ordenLlegada);
-
-                    DatosPartida.GuardarRanking(ordenLlegada);
-                    SceneManager.LoadScene(escenaRanking);
+                    Ganar(jugador);
                     return;
                 }
 
@@ -301,6 +298,62 @@ namespace Cubatis
         private void AlCaerEnCasilla(int jugador, Casilla casilla)
         {
             alCaerEnCasilla?.Invoke(jugador, casilla);
+        }
+
+        // Punto unico de victoria: lo dispara tanto una tirada real que cae
+        // EXACTO en END (ver OnResultadoDado) como ForzarVictoriaDebug. Deja
+        // 'ocupado' a true (dado bloqueado) y no pasa turno.
+        private void Ganar(int jugador)
+        {
+            terminado = true;
+            ordenLlegada.Add(Jugadores.Lista[jugador]);
+
+            // El resto de jugadores no sigue jugando (la partida se bloquea
+            // en cuanto alguien llega a END), asi que 2o/3o puesto salen de
+            // su casilla actual en este momento: el mas avanzado queda 2o,
+            // el siguiente 3o... En empate de casilla, gana el que tenga
+            // turno mas bajo (orden estable).
+            var restantes = new List<int>();
+            for (int i = 0; i < Jugadores.Cuenta; i++)
+                if (i != jugador) restantes.Add(i);
+            restantes.Sort((a, b) =>
+            {
+                int porCasilla = posiciones[b].CompareTo(posiciones[a]);
+                return porCasilla != 0 ? porCasilla : a.CompareTo(b);
+            });
+            foreach (int i in restantes) ordenLlegada.Add(Jugadores.Lista[i]);
+
+            alTerminarJuego?.Invoke(ordenLlegada);
+
+            DatosPartida.GuardarRanking(ordenLlegada);
+            SceneManager.LoadScene(escenaRanking);
+        }
+
+        /// <summary>
+        /// SOLO DEPURACION: mueve instantaneamente al jugador en turno hasta
+        /// END y dispara <see cref="Ganar"/> - la misma logica de victoria que
+        /// una tirada real (alTerminarJuego, DatosPartida, carga de Ranking),
+        /// sin jugar la partida entera. Pensado para un boton de debug en la
+        /// escena; no lo llama nada mas.
+        /// </summary>
+        public void ForzarVictoriaDebug()
+        {
+            if (ocupado || terminado || !enabled) return;
+
+            int jugador = turno;
+            int origen = posiciones[jugador];
+            int destino = tablero.Total - 1;   // END
+
+            ocupado = true;
+            ActualizarDado();
+
+            movimiento.Colocar(fichas[jugador], destino);
+            posiciones[jugador] = destino;
+            SepararFichasEn(origen);
+            SepararFichasEn(destino);
+
+            AlCaerEnCasilla(jugador, tablero.ObtenerCasilla(destino));
+            Ganar(jugador);
         }
 
         private void ActualizarDado()
