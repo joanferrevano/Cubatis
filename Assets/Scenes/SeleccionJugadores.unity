@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xBFQUIEN BEBE HOY?"
+  m_text: QUIEN BEBE HOY?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
   m_sharedMaterial: {fileID: 2561202675062858135, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
