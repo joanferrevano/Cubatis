@@ -6538,6 +6538,113 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!212 &574287710
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574287711}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1000
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -537971501324050845, guid: b346869784583fa49bb12475e5a0709c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!1 &574287711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 574287712}
+  - component: {fileID: 574287710}
+  - component: {fileID: 574287713}
+  m_Layer: 0
+  m_Name: Fondo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &574287712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574287711}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.02, y: 0.47, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &574287713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574287711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8f83ce402698f4f9ce05e5c206df37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.FondoJuego
+  ordenDibujo: -1000
+  sortingLayer: Default
 --- !u!21 &575155315
 Material:
   serializedVersion: 8
@@ -7564,98 +7671,6 @@ MonoBehaviour:
   tipo: 1
   render: {fileID: 625636976}
   texto: {fileID: 1908458813}
---- !u!1 &632645176
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 632645178}
-  - component: {fileID: 632645177}
-  m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &632645177
-SpriteRenderer:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632645176}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: -537971501324050845, guid: b346869784583fa49bb12475e5a0709c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
-  m_BlendShapeWeights: []
---- !u!4 &632645178
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632645176}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &654277649
 GameObject:
   m_ObjectHideFlags: 0
@@ -10734,279 +10749,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900000001}
   m_CullTransparentMesh: 1
---- !u!1 &960000001
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 960000002}
-  - component: {fileID: 960000003}
-  - component: {fileID: 960000004}
-  - component: {fileID: 960000005}
-  - component: {fileID: 960000006}
-  m_Layer: 5
-  m_Name: BotonDebugGanar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &960000002
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000001}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 960000102}
-  m_Father: {fileID: 574287702}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.7777778, y: 0.9609375}
-  m_AnchorMax: {x: 0.9814815, y: 0.9921875}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &960000003
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000001}
-  m_CullTransparentMesh: 1
---- !u!114 &960000004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.85, g: 0.25, b: 0.15, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &960000005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 960000004}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &960000006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95fcd7251afb43dfb950ad4f3c556b98, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonDebugGanar
-  boton: {fileID: 960000005}
-  gestor: {fileID: 1608801053}
---- !u!1 &960000101
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 960000102}
-  - component: {fileID: 960000104}
-  - component: {fileID: 960000103}
-  m_Layer: 5
-  m_Name: Texto
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &960000102
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000101}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 960000002}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -12, y: -8}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &960000103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'DEBUG: Ganar'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
-  m_sharedMaterial: {fileID: 2561202675062858135, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
-  m_fontWeight: 400
-  m_enableAutoSizing: 1
-  m_fontSizeMin: 14
-  m_fontSizeMax: 26
-  m_fontStyle: 1
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656bu
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &960000104
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960000101}
-  m_CullTransparentMesh: 1
 --- !u!1 &900000010
 GameObject:
   m_ObjectHideFlags: 0
@@ -12543,6 +12285,279 @@ MeshRenderer:
   m_SortingOrder: 49
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &960000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 960000002}
+  - component: {fileID: 960000003}
+  - component: {fileID: 960000004}
+  - component: {fileID: 960000005}
+  - component: {fileID: 960000006}
+  m_Layer: 5
+  m_Name: BotonDebugGanar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &960000002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 960000102}
+  m_Father: {fileID: 574287702}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.7777778, y: 0.9609375}
+  m_AnchorMax: {x: 0.9814815, y: 0.9921875}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &960000003
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_CullTransparentMesh: 1
+--- !u!114 &960000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.85, g: 0.25, b: 0.15, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &960000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 960000004}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &960000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fcd7251afb43dfb950ad4f3c556b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonDebugGanar
+  boton: {fileID: 960000005}
+  gestor: {fileID: 1608801053}
+--- !u!1 &960000101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 960000102}
+  - component: {fileID: 960000104}
+  - component: {fileID: 960000103}
+  m_Layer: 5
+  m_Name: Texto
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &960000102
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 960000002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -12, y: -8}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &960000103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'DEBUG: Ganar'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
+  m_sharedMaterial: {fileID: 2561202675062858135, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 26
+  m_fontSizeBase: 26
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
+  m_fontSizeMax: 26
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656bu
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &960000104
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000101}
+  m_CullTransparentMesh: 1
 --- !u!1 &976653642
 GameObject:
   m_ObjectHideFlags: 0
@@ -12736,44 +12751,117 @@ MonoBehaviour:
     portada: {fileID: -5770818526999617675, guid: 09652b1b4ebfeb947bc9f71a81648a1f, type: 3}
     plantilla: {fileID: 5472333358832404289, guid: f9a03130d4bc86c418ec9330a3f1918a, type: 3}
     frases:
-    - "Beber \xB7 frase de ejemplo 1 (sustituir)"
-    - "Beber \xB7 frase de ejemplo 2 (sustituir)"
-    - "Beber \xB7 frase de ejemplo 3 (sustituir)"
+    - Bebe si llevas algo puesto de color negro.
+    - Bebe si has salido de fiesta esta semana.
+    - "Bebe el que tenga el m\xF3vil con menos bater\xEDa."
+    - "Bebe si has mentido hoy sobre algo aunque sea peque\xF1o."
+    - "Bebe 3 segundos el que lleve m\xE1s tiempo soltero o soltera."
+    - "Bebe si te sabes la letra completa de una canci\xF3n de reguet\xF3n."
+    - "Bebe el que se levant\xF3 m\xE1s tarde hoy."
+    - Bebe si has stalkeado el perfil de un ex esta semana.
+    - Beben todos los que lleven anillo o pulsera.
+    - "Bebe el que tenga m\xE1s fotos guardadas en el m\xF3vil."
+    - Bebe si alguna vez has fingido estar enfermo para librarte de un plan.
+    - Bebe el jugador que tienes a tu izquierda.
+    - Bebe si has llegado tarde a algo importante este mes.
+    - "Beben todos menos el que empez\xF3 a jugar esta partida."
+    - "Bebe si te gusta m\xE1s el verano que el invierno."
   - tipo: 5
     portada: {fileID: 8005103946394517171, guid: bcad39c1e7549d640b3f8a876796ec60, type: 3}
     plantilla: {fileID: -5551357444587061719, guid: 6f38199d688470b42a460b02a33c4699, type: 3}
     frases:
-    - "Evento \xB7 frase de ejemplo 1 (sustituir)"
-    - "Evento \xB7 frase de ejemplo 2 (sustituir)"
-    - "Evento \xB7 frase de ejemplo 3 (sustituir)"
+    - 'Nueva regla: hasta que alguien vuelva a caer en un Evento nadie puede decir la palabra no.'
+    - Todos cambian de sitio con la persona que tienen enfrente.
+    - "El jugador con el m\xF3vil m\xE1s nuevo reparte dos tragos."
+    - 'Se declara ronda de silencio: el primero en hablar bebe.'
+    - "Todos brindan por el peor d\xEDa de la semana de alguien del grupo."
+    - Intercambia un objeto que lleves puesto con el jugador de tu derecha hasta el final de la ronda.
+    - "El grupo elige a un capit\xE1n que decide qui\xE9n bebe en la pr\xF3xima ronda."
+    - "Se abre una votaci\xF3n: el grupo decide qui\xE9n ha sido el m\xE1s cotilla de la noche y esa persona bebe."
+    - 'Nueva regla: prohibido llamar a cualquiera por su nombre de pila hasta el final de la partida.'
+    - Todos los jugadores brindan a la vez y beben.
+    - "El \xFAltimo en tocarse la nariz bebe."
+    - Ronda de aplausos para el jugador que va ganando y por presumir bebe.
+    - Cambia tu sitio con el jugador que quieras del grupo.
+    - "Todos deben ense\xF1ar la \xFAltima foto de su carrete sin excusas."
   - tipo: 6
     portada: {fileID: -1020366611377937018, guid: a63b700e7fd62a34fac6eed01ecf85ab, type: 3}
     plantilla: {fileID: 216851716356719090, guid: ecbfd9cb1daa12e419df94477f114935, type: 3}
     frases:
-    - "Hot \xB7 frase de ejemplo 1 (sustituir)"
-    - "Hot \xB7 frase de ejemplo 2 (sustituir)"
-    - "Hot \xB7 frase de ejemplo 3 (sustituir)"
+    - "\xBFA qui\xE9n del grupo besar\xEDas si no hubiera consecuencias?"
+    - "Describe cu\xE1l ser\xEDa tu cita perfecta con alguien de aqu\xED."
+    - "\xBFCu\xE1l ha sido tu beso m\xE1s inc\xF3modo?"
+    - Haz un cumplido subido de tono a la persona de tu derecha.
+    - "\xBFAlguna vez te has enamorado de alguien de este grupo?"
+    - "Sus\xFArrale algo al o\xEDdo a la persona que tengas m\xE1s cerca."
+    - "\xBFQu\xE9 es lo primero que te fijas en alguien que te atrae?"
+    - "Confiesa qui\xE9n te parece la persona m\xE1s atractiva de la sala."
+    - "\xBFCu\xE1l ha sido tu cita m\xE1s rara?"
+    - "Haz contacto visual con la persona de tu izquierda durante diez segundos sin re\xEDrte."
+    - "\xBFPrefieres un beso en la mejilla o un abrazo largo y por qu\xE9?"
+    - Cuenta la historia de tu primer flechazo.
+    - "\xBFAlguna vez has tenido un crush con el amigo o la amiga de un amigo?"
+    - "Baila una canci\xF3n lenta con el jugador que elijas."
   - tipo: 4
     portada: {fileID: 3693002286276395167, guid: ca08abe79d353dc42aea5d9283f1defb, type: 3}
     plantilla: {fileID: 152406670805455862, guid: cf66064c3dc78874384d4a5acc61f7e5, type: 3}
     frases:
-    - "Reto \xB7 frase de ejemplo 1 (sustituir)"
-    - "Reto \xB7 frase de ejemplo 2 (sustituir)"
-    - "Reto \xB7 frase de ejemplo 3 (sustituir)"
+    - Haz de streamer narrando la fiesta durante un minuto.
+    - "Manda un audio cantando a la \xFAltima persona con la que hablaste por WhatsApp."
+    - Deja que el grupo publique una story en tu Instagram.
+    - Imita al jugador de tu derecha durante toda la ronda.
+    - Haz diez flexiones o bebe el doble.
+    - "Habla con acento random hasta tu pr\xF3ximo turno."
+    - "Baila veinte segundos sin m\xFAsica."
+    - Deja que alguien del grupo te maquille o te peine como quiera.
+    - "Ens\xE9\xF1ale al grupo tu mejor selfie fallida."
+    - Llama a la primera persona de tu agenda y dile que la echas de menos.
+    - Cambia tu foto de perfil por la que elija el grupo durante diez minutos.
+    - "Cuenta un secreto cualquiera sin decir de qui\xE9n es."
+    - "Haz una imitaci\xF3n de otro jugador del grupo."
+    - Deja que te hagan una pregunta sin poder decir paso.
+    - "Ense\xF1a las \xFAltimas tres fotos de tu carrete al grupo."
+    - "Habla solo con preguntas durante los pr\xF3ximos cinco minutos."
   - tipo: 3
     portada: {fileID: -4542408732484108522, guid: 7971964bc7f51094684b0057889f3e8a, type: 3}
     plantilla: {fileID: -8340873178334943318, guid: e01509af805eaea4cb1b8043ae8c4049, type: 3}
     frases:
-    - "Verdad \xB7 frase de ejemplo 1 (sustituir)"
-    - "Verdad \xB7 frase de ejemplo 2 (sustituir)"
-    - "Verdad \xB7 frase de ejemplo 3 (sustituir)"
+    - "\xBFCu\xE1l es la mentira m\xE1s grande que le has dicho a un amigo?"
+    - "\xBFA qui\xE9n del grupo llamar\xEDas primero si tuvieras un problema grave?"
+    - "\xBFCu\xE1l es tu mayor man\xEDa que la gente no conoce?"
+    - "\xBFQu\xE9 es lo m\xE1s vergonzoso que te ha pasado en una cita?"
+    - "\xBFHas fingido alguna vez que te ca\xEDa bien alguien?"
+    - "\xBFCu\xE1l es el rumor m\xE1s raro que se ha dicho sobre ti?"
+    - "\xBFQu\xE9 app borrar\xEDas del m\xF3vil si supieras que alguien va a revisarlo?"
+    - "\xBFA qui\xE9n del grupo admiras m\xE1s y por qu\xE9?"
+    - "\xBFCu\xE1l ha sido tu peor decisi\xF3n de esta semana?"
+    - "\xBFQu\xE9 secreto guardas que nadie de aqu\xED sabe?"
+    - "\xBFCu\xE1l es tu red social favorita para stalkear a la gente?"
+    - "\xBFAlguna vez le has copiado el estilo a alguien de este grupo?"
+    - "\xBFQu\xE9 es lo que m\xE1s miedo te da del futuro?"
+    - "\xBFCu\xE1l es la excusa m\xE1s tonta que has usado para no ir a un plan?"
+    - "\xBFA qui\xE9n del grupo le mentir\xEDas sin sentir culpa?"
+    - "\xBFCu\xE1l es tu mayor inseguridad?"
   - tipo: 2
     portada: {fileID: 5263495900794470976, guid: 56aebba56e801b846850ef7783367a47, type: 3}
     plantilla: {fileID: -6941100112406018268, guid: 3a8c34c1cb070034ea9e02463ac82265, type: 3}
     frases:
-    - "YoNunca \xB7 frase de ejemplo 1 (sustituir)"
-    - "YoNunca \xB7 frase de ejemplo 2 (sustituir)"
-    - "YoNunca \xB7 frase de ejemplo 3 (sustituir)"
+    - Yo nunca he mandado un mensaje a la persona equivocada.
+    - Yo nunca me he quedado dormido en clase o en el trabajo.
+    - Yo nunca le he hecho ghosting a alguien.
+    - Yo nunca he mentido sobre mi edad.
+    - "Yo nunca me he colado en una fiesta sin invitaci\xF3n."
+    - "Yo nunca he llorado viendo una pel\xEDcula."
+    - Yo nunca he tenido una app de citas.
+    - Yo nunca he copiado en un examen.
+    - "Yo nunca he pedido perd\xF3n sin sentirlo de verdad."
+    - "Yo nunca he salido con alguien solo por su f\xEDsico."
+    - Yo nunca he hecho una videollamada en pijama fingiendo estar arreglado.
+    - Yo nunca he perdido las llaves de casa estando de fiesta.
+    - "Yo nunca he mandado un audio de m\xE1s de 3 minutos."
+    - "Yo nunca me he arrepentido de una publicaci\xF3n en redes sociales."
+    - "Yo nunca he fingido conocer una canci\xF3n para no quedar mal."
+    - Yo nunca he llegado tarde por quedarme dormido con la alarma puesta.
   altoRelativoPantalla: 0.72
   colorFondo: {r: 0, g: 0, b: 0, a: 0.78}
   fuenteReto: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
@@ -26616,6 +26704,6 @@ SceneRoots:
   - {fileID: 1200000001}
   - {fileID: 1608801054}
   - {fileID: 1905470968}
-  - {fileID: 632645178}
   - {fileID: 996287037}
   - {fileID: 900000061}
+  - {fileID: 574287712}

@@ -3,7 +3,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 #if UNITY_EDITOR
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEditor;
 #endif
 
@@ -348,6 +352,149 @@ namespace Cubatis
         private static Sprite CargarSprite(string ruta) =>
             AssetDatabase.LoadAllAssetRepresentationsAtPath(ruta).OfType<Sprite>().FirstOrDefault()
             ?? AssetDatabase.LoadAssetAtPath<Sprite>(ruta);
+
+        // ===================== IMPORTAR FRASES DESDE CSV =====================
+        private const string RutaFrasesCsv = "Assets/Boards/Cartas/frases.csv";
+
+        // Texto de CATEGORIA del CSV (normalizado: mayusculas, sin espacios, sin
+        // acentos) -> TipoCasilla. Hace falta un alias explicito porque "Bebe"
+        // (CSV) no coincide con el nombre del enum "Beber"; el resto son 1:1
+        // pero se listan igual para dejar claro cual es el mapeo completo.
+        private static readonly Dictionary<string, TipoCasilla> AliasCategoriaCsv = new Dictionary<string, TipoCasilla>
+        {
+            ["BEBE"] = TipoCasilla.Beber,
+            ["BEBER"] = TipoCasilla.Beber,
+            ["YONUNCA"] = TipoCasilla.YoNunca,
+            ["VERDAD"] = TipoCasilla.Verdad,
+            ["RETO"] = TipoCasilla.Reto,
+            ["EVENTO"] = TipoCasilla.Evento,
+            ["HOT"] = TipoCasilla.Hot,
+        };
+
+        /// <summary>
+        /// Lee Assets/Boards/Cartas/frases.csv (columnas CATEGORIA, COLOR, FRASE;
+        /// COLOR se ignora), agrupa por CATEGORIA y rellena 'frases' del elemento
+        /// de 'cartas' cuyo Tipo coincida. Si el array todavia tiene los
+        /// placeholders de CargarDeDisco ("... frase de ejemplo N (sustituir)")
+        /// los sustituye enteros; si ya hay frases reales, anade las del CSV al
+        /// final sin duplicar. No crea elementos nuevos en 'cartas': una
+        /// categoria del CSV sin Tipo coincidente solo se avisa por consola.
+        /// Accion manual (no corre sola ni en build): boton derecho en el
+        /// componente CartaReto del Inspector > este item del menu contextual.
+        /// </summary>
+        [ContextMenu("Importar frases desde CSV (Assets/Boards/Cartas/frases.csv)")]
+        private void ImportarFrasesDesdeCSV()
+        {
+            if (!File.Exists(RutaFrasesCsv))
+            {
+                Debug.LogError($"[CartaReto] No se encontro el CSV en '{RutaFrasesCsv}'.");
+                return;
+            }
+
+            // 1. Leer y agrupar por categoria, conservando el orden de aparicion
+            // en el CSV. La FRASE es todo lo que queda tras la 2a coma (por si
+            // alguna vez lleva comas dentro), CATEGORIA es el primer campo.
+            var frasesPorCategoria = new List<(string categoria, List<string> frases)>();
+            var indicePorClave = new Dictionary<string, int>();
+
+            string[] lineas = File.ReadAllLines(RutaFrasesCsv, Encoding.UTF8);
+            for (int i = 1; i < lineas.Length; i++)   // salta la cabecera CATEGORIA,COLOR,FRASE
+            {
+                string linea = lineas[i];
+                if (string.IsNullOrWhiteSpace(linea)) continue;
+
+                int primeraComa = linea.IndexOf(',');
+                int segundaComa = primeraComa >= 0 ? linea.IndexOf(',', primeraComa + 1) : -1;
+                if (primeraComa < 0 || segundaComa < 0)
+                {
+                    Debug.LogWarning($"[CartaReto] Linea {i + 1} del CSV ignorada (formato inesperado): {linea}");
+                    continue;
+                }
+
+                string categoria = linea.Substring(0, primeraComa).Trim();
+                string frase = linea.Substring(segundaComa + 1).Trim();
+                if (categoria.Length == 0 || frase.Length == 0) continue;
+
+                string clave = NormalizarClaveCategoria(categoria);
+                if (!indicePorClave.TryGetValue(clave, out int idx))
+                {
+                    idx = frasesPorCategoria.Count;
+                    indicePorClave[clave] = idx;
+                    frasesPorCategoria.Add((categoria, new List<string>()));
+                }
+                frasesPorCategoria[idx].frases.Add(frase);
+            }
+
+            // 2. Volcar cada categoria del CSV sobre el elemento de 'cartas' con
+            // el mismo Tipo.
+            var resumen = new List<string>();
+            var sinCoincidencia = new List<string>();
+
+            foreach (var (categoria, frasesCsv) in frasesPorCategoria)
+            {
+                string clave = NormalizarClaveCategoria(categoria);
+                if (!AliasCategoriaCsv.TryGetValue(clave, out TipoCasilla tipo))
+                {
+                    sinCoincidencia.Add(categoria);
+                    continue;
+                }
+
+                Entrada entrada = Obtener(tipo);
+                if (entrada == null)
+                {
+                    sinCoincidencia.Add($"{categoria} ({tipo}: sin elemento en 'Cartas')");
+                    continue;
+                }
+
+                bool teniaPlaceholders = SonPlaceholders(entrada.frases);
+                var actuales = teniaPlaceholders ? new List<string>() : new List<string>(entrada.frases);
+
+                int anadidas = 0;
+                foreach (string frase in frasesCsv)
+                    if (!actuales.Contains(frase)) { actuales.Add(frase); anadidas++; }
+
+                entrada.frases = actuales.ToArray();
+                resumen.Add($"{tipo}: {anadidas} frase(s) importada(s), total {actuales.Count}" +
+                    (teniaPlaceholders ? " (placeholders sustituidos)" : ""));
+            }
+
+            EditorUtility.SetDirty(this);
+
+            // 3. Informe en consola.
+            Debug.Log("[CartaReto] Import de frases desde CSV completado:\n" +
+                (resumen.Count > 0 ? string.Join("\n", resumen) : "(ninguna categoria importada)"));
+            if (sinCoincidencia.Count > 0)
+                Debug.LogWarning("[CartaReto] Categorias del CSV sin Tipo coincidente en 'Cartas' (revisar a mano): " +
+                    string.Join(", ", sinCoincidencia));
+        }
+
+        // Coincide con el formato exacto que genera CargarDeDisco: cualquier
+        // frase que no tenga ese formato ya se considera "real" y no se borra.
+        private static bool SonPlaceholders(string[] frases)
+        {
+            if (frases == null || frases.Length == 0) return true;
+            foreach (string f in frases)
+                if (string.IsNullOrEmpty(f) || !f.Contains("frase de ejemplo") || !f.Contains("(sustituir)"))
+                    return false;
+            return true;
+        }
+
+        // Mayusculas + sin espacios + sin acentos, para que "Bebe", " bebe ",
+        // "Yo Nunca" / "YoNunca" etc. del CSV encajen con las claves de
+        // AliasCategoriaCsv sin depender de como se haya tecleado el CSV.
+        private static string NormalizarClaveCategoria(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+            string descompuesto = s.Normalize(NormalizationForm.FormD);
+            var sb = new StringBuilder(descompuesto.Length);
+            foreach (char c in descompuesto)
+            {
+                if (char.IsWhiteSpace(c)) continue;
+                if (CharUnicodeInfo.GetUnicodeCategory(c) == UnicodeCategory.NonSpacingMark) continue;
+                sb.Append(char.ToUpperInvariant(c));
+            }
+            return sb.ToString();
+        }
 #endif
     }
 }
