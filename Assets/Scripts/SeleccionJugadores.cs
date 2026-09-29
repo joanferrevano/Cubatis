@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Cubatis
@@ -160,7 +159,7 @@ namespace Cubatis
         // ===================== NAVEGACION =====================
         public void Empezar()
         {
-            if (Jugadores.SuficientesParaJugar) SceneManager.LoadScene(escenaTablero);
+            if (Jugadores.SuficientesParaJugar) GestorTransiciones.CargarEscenaConFade(escenaTablero);
         }
 
         private Sprite ObtenerAvatar(int i)

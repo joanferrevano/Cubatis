@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Cubatis.EditorTools
 {
@@ -13,12 +12,10 @@ namespace Cubatis.EditorTools
     /// comentados aqui (un ParticleSystem serializado son miles de lineas de
     /// YAML ilegible).
     ///
-    /// "Aplicar a escenas" tambien convierte los fondos de UI (Image de
-    /// "Fondo Personajes" dentro de un Canvas Overlay) en sprites de mundo como
-    /// el del Tablero: un Canvas Overlay se dibuja encima de todo lo del mundo,
-    /// asi que con el fondo en el Canvas las burbujas quedarian tapadas.
-    /// Orden resultante: fondo (-1000) -> burbujas (-500) -> tablero (0+) ->
-    /// UI Overlay. Ambos pasos son idempotentes.
+    /// Las burbujas necesitan el fondo como sprite de mundo (no Image de un
+    /// Canvas Overlay, que se dibuja encima de todo lo del mundo). Orden:
+    /// fondo (-1000) -> burbujas (-500) -> tablero (0+) -> UI Overlay.
+    /// "Aplicar a escenas" es idempotente.
     /// </summary>
     public static class ConstructorBurbujasAmbiente
     {
@@ -157,14 +154,12 @@ namespace Cubatis.EditorTools
             foreach (var ruta in Escenas)
             {
                 var escena = EditorSceneManager.OpenScene(ruta, OpenSceneMode.Single);
-                int fondos = MigrarFondosUI(escena);
-                bool burbujas = InstanciarBurbujas(prefab);
-                if (fondos > 0 || burbujas)
+                if (InstanciarBurbujas(prefab))
                 {
                     EditorSceneManager.SaveScene(escena);
-                    Debug.Log($"[Burbujas] {ruta}: {fondos} fondo(s) de UI pasados a mundo, burbujas {(burbujas ? "anadidas" : "ya estaban")}.");
+                    Debug.Log($"[Burbujas] {ruta}: burbujas anadidas.");
                 }
-                else Debug.Log($"[Burbujas] {ruta}: sin cambios.");
+                else Debug.Log($"[Burbujas] {ruta}: ya tenia burbujas, sin cambios.");
             }
             if (!string.IsNullOrEmpty(escenaInicial)) EditorSceneManager.OpenScene(escenaInicial);
         }
@@ -206,36 +201,6 @@ namespace Cubatis.EditorTools
             foreach (var o in AssetDatabase.LoadAllAssetsAtPath(RutaFondo))
                 if (o is Sprite s) return s;
             return null;
-        }
-
-        /// <summary>
-        /// Sustituye cada Image de Canvas con el sprite de fondo por un fondo de
-        /// mundo con el mismo sprite y color, conservando los ajustes del
-        /// FondoParallax que tuviera.
-        /// </summary>
-        private static int MigrarFondosUI(Scene escena)
-        {
-            var spriteFondo = CargarSpriteFondo();
-            if (spriteFondo == null) return 0;
-
-            int n = 0;
-            foreach (var raiz in escena.GetRootGameObjects())
-            foreach (var img in raiz.GetComponentsInChildren<Image>(true))
-            {
-                if (img.sprite != spriteFondo || img.GetComponentInParent<Canvas>(true) == null) continue;
-                if (img.GetComponent<Canvas>() != null)
-                {
-                    Debug.LogWarning($"[Burbujas] {escena.path}: el fondo esta en el propio Canvas '{img.name}', no se migra.");
-                    continue;
-                }
-
-                var nuevo = CrearFondoMundo(img.sprite, img.color);
-                var viejo = img.GetComponent<FondoParallax>();
-                if (viejo != null) EditorUtility.CopySerialized(viejo, nuevo.GetComponent<FondoParallax>());
-                Object.DestroyImmediate(img.gameObject);
-                n++;
-            }
-            return n;
         }
 
         private static Sprite PrepararSpriteBurbuja()

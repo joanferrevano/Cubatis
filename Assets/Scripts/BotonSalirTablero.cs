@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Cubatis
@@ -8,7 +7,7 @@ namespace Cubatis
     /// Boton icono (esquina inferior izquierda, a la altura del Dado) para
     /// abandonar la partida en curso. Mismo patron que
     /// <see cref="RankingUI.VolverAlMenu"/> (Button que carga "MenuPrincipal"
-    /// con SceneManager.LoadScene), pero aqui con un panel de confirmacion de
+    /// con GestorTransiciones.CargarEscenaConFade), pero aqui con un panel de confirmacion de
     /// por medio para no perder la partida por un toque accidental: el dado y
     /// el resto de la logica de GestorPartida no se tocan, esto solo corta la
     /// partida cargando el menu.
@@ -23,9 +22,6 @@ namespace Cubatis
     [DisallowMultipleComponent]
     public class BotonSalirTablero : MonoBehaviour
     {
-        [Header("Icono (arrastra aqui el sprite: flecha atras, casa, etc.)")]
-        [SerializeField] private Image icono;
-
         [Header("Botones")]
         [SerializeField] private Button botonSalir;
         [SerializeField] private Button botonConfirmarSalir;
@@ -75,6 +71,6 @@ namespace Cubatis
             if (panelConfirmacion != null) panelConfirmacion.SetActive(false);
         }
 
-        public void VolverAlMenu() => SceneManager.LoadScene(escenaMenu);
+        public void VolverAlMenu() => GestorTransiciones.CargarEscenaConFade(escenaMenu);
     }
 }

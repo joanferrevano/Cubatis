@@ -26,7 +26,5 @@ namespace Cubatis
             if (ordenLlegada == null) return;
             for (int i = 0; i < ordenLlegada.Count; i++) Ranking.Add(ordenLlegada[i]);
         }
-
-        public static void Limpiar() => Ranking.Clear();
     }
 }

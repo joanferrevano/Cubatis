@@ -115,6 +115,15 @@ añadirla a Build Settings y re-apuntar esos campos.
   (ParticleSystem de Shuriken). El efecto vive en el ParticleSystem; el
   script solo lo encaja bajo la cámara y lo escala según su tamaño
   ortográfico (diseñado para tamaño 5).
+- `GestorTransiciones`: cambio de escena con fundido cruzado real (0,28 s,
+  ease-in-out). Foto de la pantalla (`ScreenCapture`, incluye la UI
+  Overlay) encima de todo → desactiva las raíces de la escena vieja (evita
+  cámaras/EventSystems/AudioListeners duplicados) → carga aditiva de la
+  nueva, que pasa a escena activa antes de sus `Start` → la foto baja a 0%
+  → descarga la vieja. Se crea solo la primera vez que se usa (GameObject
+  con `DontDestroyOnLoad`, sin montar nada en escena) y bloquea los toques
+  mientras dura. Ojo: los objetos raíz creados por código en `Start` van a
+  la escena activa; por eso importa el `SetActiveScene` temprano.
 
 **Capas de dibujo (todas las escenas)**: el fondo es un `SpriteRenderer` de
 mundo con `FondoJuego` (-1000), después las burbujas (-500), después el
@@ -133,10 +142,10 @@ tapa todo lo del mundo y las burbujas quedarían ocultas.
 - `ConstructorSeleccionJugadores`: menú `Cubatis > Construir escena Selección
   de Jugadores` — regenera esa escena entera + prefabs `SlotJugador` /
   `BotonAvatar` + avatares placeholder desde cero. También tiene
-  `Reasignar prefabs...` y `Migrar ContenedorSlots a Scroll View`.
+  `Reasignar prefabs...`.
 - `ConstructorBurbujasAmbiente`: menú `Cubatis > Burbujas` — genera el prefab
   `BurbujasAmbiente` (todos los valores del efecto están ahí) y lo aplica a
-  las 4 escenas, migrando los fondos de UI a fondo de mundo. Idempotente.
+  las 4 escenas. Idempotente.
 
 ## 4. Patrones establecidos (seguirlos en código nuevo)
 
@@ -146,6 +155,12 @@ tapa todo lo del mundo y las burbujas quedarían ocultas.
   necesidad de un GameObject persistente. `DontDestroyOnLoad` solo se
   justificaría si algo necesitara seguir *actualizándose* o *recibiendo
   eventos* entre escenas — aquí solo hay datos que leer, así que se evita.
+  La única excepción es `GestorTransiciones`, cuyo fundido sí tiene que
+  seguir animándose durante y después de la carga.
+- **Cambios de escena**: siempre con
+  `GestorTransiciones.CargarEscenaConFade(nombre)`, nunca con
+  `SceneManager.LoadScene` directo (solo las herramientas de editor usan
+  `EditorSceneManager`).
 - **UI**: Canvas `Screen Space - Overlay` + `CanvasScaler` en modo
   *Scale With Screen Size*, resolución de referencia **1080x1920**, `Match`
   **0.5**. Mantenerlo en cualquier Canvas nuevo.

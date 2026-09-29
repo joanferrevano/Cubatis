@@ -11604,7 +11604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8525c9c973ea416581e9658e24b81a34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonSalirTablero
-  icono: {fileID: 900000003}
   botonSalir: {fileID: 900000004}
   botonConfirmarSalir: {fileID: 900000052}
   botonCancelar: {fileID: 900000042}
@@ -22375,7 +22374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -7.28
       objectReference: {fileID: 0}
     - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
       propertyPath: m_LocalPosition.z

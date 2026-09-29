@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Cubatis
@@ -7,7 +6,7 @@ namespace Cubatis
     /// <summary>
     /// Tarjeta de un modo de juego en ModosJuegos. Si <see cref="implementado"/>
     /// esta activo, al pulsarla carga <see cref="escenaDestino"/> con
-    /// SceneManager.LoadScene, sin tocar Jugadores.Lista ni ningun otro dato de
+    /// GestorTransiciones.CargarEscenaConFade, sin tocar Jugadores.Lista ni ningun otro dato de
     /// partida (son estaticos, sobreviven solos al cambio de escena). Si no,
     /// solo avisa por consola: la tarjeta queda clicable pero sin efecto.
     /// </summary>
@@ -34,7 +33,7 @@ namespace Cubatis
 
         public void Seleccionar()
         {
-            if (implementado) SceneManager.LoadScene(escenaDestino);
+            if (implementado) GestorTransiciones.CargarEscenaConFade(escenaDestino);
             else Debug.LogWarning($"[BotonModoJuego] Modo '{nombreModo}' aun no implementado.");
         }
     }

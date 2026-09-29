@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using System.Linq;
@@ -70,7 +69,7 @@ namespace Cubatis
             return avatares[((i % avatares.Length) + avatares.Length) % avatares.Length];
         }
 
-        public void VolverAlMenu() => SceneManager.LoadScene(escenaMenu);
+        public void VolverAlMenu() => GestorTransiciones.CargarEscenaConFade(escenaMenu);
 
         // Si el array esta vacio, lo rellena leyendo Assets/Boards/Avatares en el
         // editor (mismo mecanismo que GestorPartida.AsegurarAvatares). Para el

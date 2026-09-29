@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
@@ -292,8 +291,9 @@ namespace Cubatis
         }
 
         /// <summary>
-        /// PUNTO DE ENGANCHE para la logica de retos (pendiente). De momento solo
-        /// propaga el evento; aqui ira el "que pasa segun casilla.Tipo".
+        /// Solo propaga <see cref="alCaerEnCasilla"/> para otros sistemas. La
+        /// carta de reto NO se abre aqui: la abre OnResultadoDado despues de
+        /// comprobar la victoria, porque caer en END no lleva carta.
         /// </summary>
         private void AlCaerEnCasilla(int jugador, Casilla casilla)
         {
@@ -326,7 +326,7 @@ namespace Cubatis
             alTerminarJuego?.Invoke(ordenLlegada);
 
             DatosPartida.GuardarRanking(ordenLlegada);
-            SceneManager.LoadScene(escenaRanking);
+            GestorTransiciones.CargarEscenaConFade(escenaRanking);
         }
 
         /// <summary>

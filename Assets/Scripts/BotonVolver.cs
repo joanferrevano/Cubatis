@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Cubatis
@@ -7,7 +6,7 @@ namespace Cubatis
     /// <summary>
     /// Boton generico para volver a una escena anterior. Mismo patron que
     /// <see cref="RankingUI.VolverAlMenu"/> y <see cref="BotonSalirTablero.VolverAlMenu"/>:
-    /// un Button que carga 'escenaDestino' con SceneManager.LoadScene.
+    /// un Button que carga 'escenaDestino' con GestorTransiciones.CargarEscenaConFade.
     /// </summary>
     [DisallowMultipleComponent]
     public class BotonVolver : MonoBehaviour
@@ -24,6 +23,6 @@ namespace Cubatis
             if (boton != null) boton.onClick.AddListener(Volver);
         }
 
-        public void Volver() => SceneManager.LoadScene(escenaDestino);
+        public void Volver() => GestorTransiciones.CargarEscenaConFade(escenaDestino);
     }
 }
