@@ -225,6 +225,7 @@ namespace Cubatis.EditorTools
 
             var fondo = NuevaImagen("Fondo", raiz, Morado, null);
             Estirar(fondo.rectTransform);
+            fondo.gameObject.AddComponent<FondoParallax>();
 
             var titulo = NuevoTexto("Titulo", raiz, "¿QUIEN BEBE HOY?", 74, FontStyles.Bold, TextAlignmentOptions.Center);
             Anclar(titulo.rectTransform, new Vector2(0.5f, 1f), new Vector2(960, 150), new Vector2(0, -130));

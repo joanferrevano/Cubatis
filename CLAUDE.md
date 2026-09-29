@@ -103,6 +103,12 @@ añadirla a Build Settings y re-apuntar esos campos.
 - `BotonAnimado`: micro-animación de "squash" al pulsar (escala ~92% y
   vuelta), solo visual. Va en el mismo GameObject que cada `Button` y en el
   `Dado`; no encoge si el botón no es interactuable o el dado no puede tirar.
+- `FondoParallax`: deriva lenta y continua del fondo (vaivén diagonal +
+  balanceo), en el GameObject `Fondo` de las 4 escenas (SpriteRenderer en
+  Tablero, `Image` de UI en el resto). No es scroll por offset de textura
+  porque `Fondo Personajes.png` no es un tile (degradado pintado + vasos
+  colocados a mano): amplía el fondo lo justo y se mueve dentro del margen.
+  El fondo debe ir en su propio GameObject, no en el Canvas raíz.
 
 **Debug / temporal**
 - `BotonDebugGanar`: botón que llama a `GestorPartida.ForzarVictoriaDebug()`.
