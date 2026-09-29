@@ -416,6 +416,7 @@ namespace Cubatis.EditorTools
             root.AddComponent<Mask>().showMaskGraphic = false;
             var boton = root.AddComponent<Button>();
             boton.targetGraphic = rootImg;
+            root.AddComponent<BotonAnimado>();
             ((RectTransform)root.transform).sizeDelta = new Vector2(150, 150);
 
             var img = NuevaImagen("Img", root.transform, Color.white, null);
@@ -516,6 +517,7 @@ namespace Cubatis.EditorTools
             var img = NuevaImagen(nombre, padre, color, null);
             var b = img.gameObject.AddComponent<Button>();
             b.targetGraphic = img;
+            img.gameObject.AddComponent<BotonAnimado>();
             var cb = b.colors;
             cb.disabledColor = new Color(color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, 0.5f);
             b.colors = cb;

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6274966054365783444}
   - component: {fileID: 110398182264792768}
   - component: {fileID: 3104539485503847685}
+  - component: {fileID: 5954935355884190976}
   m_Layer: 0
   m_Name: BotonAvatar
   m_TagString: Untagged
@@ -317,3 +318,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
   m_AspectMode: 3
   m_AspectRatio: 1
+--- !u!114 &5954935355884190976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276253419236194940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1

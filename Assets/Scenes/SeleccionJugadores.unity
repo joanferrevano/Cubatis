@@ -831,6 +831,7 @@ GameObject:
   - component: {fileID: 886652872}
   - component: {fileID: 886652871}
   - component: {fileID: 886652873}
+  - component: {fileID: 7269433258781398159}
   m_Layer: 0
   m_Name: BotonAceptar
   m_TagString: Untagged
@@ -1792,6 +1793,7 @@ GameObject:
   - component: {fileID: 1426547079}
   - component: {fileID: 1426547078}
   - component: {fileID: 1426547077}
+  - component: {fileID: 5299422288587140309}
   m_Layer: 0
   m_Name: BotonEmpezar
   m_TagString: Untagged
@@ -2238,6 +2240,7 @@ GameObject:
   - component: {fileID: 1833690263}
   - component: {fileID: 1833690262}
   - component: {fileID: 1833690261}
+  - component: {fileID: 2563284739256020183}
   m_Layer: 0
   m_Name: BotonCerrar
   m_TagString: Untagged
@@ -2434,6 +2437,7 @@ GameObject:
   - component: {fileID: 2125033517}
   - component: {fileID: 2125033516}
   - component: {fileID: 2125033515}
+  - component: {fileID: 4809288101524329050}
   m_Layer: 0
   m_Name: BotonMas
   m_TagString: Untagged
@@ -2686,3 +2690,67 @@ SceneRoots:
   - {fileID: 1016152409}
   - {fileID: 1386465745}
   - {fileID: 1447726465}
+--- !u!114 &7269433258781398159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886652869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
+--- !u!114 &5299422288587140309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426547076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
+--- !u!114 &2563284739256020183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833690260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
+--- !u!114 &4809288101524329050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125033514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1

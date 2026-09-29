@@ -99,6 +99,11 @@ añadirla a Build Settings y re-apuntar esos campos.
 - `RankingUI`: pinta `JugadorTop1/2/3` según `DatosPartida.Ranking`; oculta
   los puestos sin jugador (p. ej. Top3 en partidas de 2).
 
+**UI común (todas las escenas)**
+- `BotonAnimado`: micro-animación de "squash" al pulsar (escala ~92% y
+  vuelta), solo visual. Va en el mismo GameObject que cada `Button` y en el
+  `Dado`; no encoge si el botón no es interactuable o el dado no puede tirar.
+
 **Debug / temporal**
 - `BotonDebugGanar`: botón que llama a `GestorPartida.ForzarVictoriaDebug()`.
   Se autodesactiva si `!Debug.isDebugBuild`, pero el GameObject sigue en la
@@ -140,6 +145,8 @@ añadirla a Build Settings y re-apuntar esos campos.
 - **Un único punto de resolución por flujo**: `GestorPartida.Ganar()` es el
   único sitio que termina la partida (tirada real y botón debug pasan por
   ahí); no duplicar esa lógica en otro sitio.
+- **Botones nuevos**: añadirles `BotonAnimado` (el constructor de
+  SeleccionJugadores ya lo hace en los que genera).
 - **Comentarios**: el código está comentado con XML doc (`/// <summary>`) en
   español explicando el *porqué* de decisiones no obvias, no el *qué* hace
   cada línea. Mantener ese estilo, sin exceso de comentarios triviales.

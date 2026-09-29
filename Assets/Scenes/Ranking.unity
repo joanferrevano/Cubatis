@@ -1238,6 +1238,7 @@ GameObject:
   - component: {fileID: 1794834830}
   - component: {fileID: 1794834829}
   - component: {fileID: 1794834828}
+  - component: {fileID: 6924209400924811537}
   m_Layer: 5
   m_Name: BotonVolverMenu
   m_TagString: Untagged
@@ -1355,3 +1356,19 @@ SceneRoots:
   - {fileID: 1008454920}
   - {fileID: 394779613}
   - {fileID: 990000002}
+--- !u!114 &6924209400924811537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794834826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1

@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 8556306240881605438}
   - component: {fileID: 8198209824023948896}
   - component: {fileID: 2734070491653663851}
+  - component: {fileID: 1099378874992548932}
   m_Layer: 0
   m_Name: BotonQuitar
   m_TagString: Untagged
@@ -669,3 +670,19 @@ MonoBehaviour:
   avatar: {fileID: 7937402016381088678}
   nombre: {fileID: 5302098907676655913}
   botonQuitar: {fileID: 2734070491653663851}
+--- !u!114 &1099378874992548932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3796025578790827991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
