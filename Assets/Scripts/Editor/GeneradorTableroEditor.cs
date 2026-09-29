@@ -22,6 +22,9 @@ namespace Cubatis.EditorTools
             ("spriteBeber", "Beber"), ("spriteYoNunca", "Yo nunca"),
             ("spriteVerdad", "Verdad"), ("spriteReto", "Reto"),
             ("spriteEvento", "Evento"), ("spriteHot", "Hot"),
+            // Modo Hot
+            ("spriteHot2", "hot2"), ("spriteHot3", "hot3"),
+            ("spriteStartHot", "START_hot"), ("spriteEndHot", "END_hot"),
         };
 
         public override void OnInspectorGUI()
@@ -41,6 +44,14 @@ namespace Cubatis.EditorTools
             else
             {
                 EditorGUILayout.HelpBox("Los 8 sprites estan asignados.", MessageType.Info);
+            }
+
+            // Solo avisa: sin ellos el modo Hot usa Hot.png y START/END normales.
+            if (!generador.SpritesHotAsignados)
+            {
+                EditorGUILayout.HelpBox("Faltan sprites del modo Hot (hot2, hot3, START_hot, END_hot).", MessageType.Warning);
+                if (GUILayout.Button("Cargar sprites desde " + CarpetaSprites, GUILayout.Height(24)))
+                    CargarSprites();
             }
 
             EditorGUILayout.Space(4);

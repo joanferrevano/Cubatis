@@ -1032,6 +1032,7 @@ MonoBehaviour:
   boton: {fileID: 301004004}
   nombreModo: Clasico
   implementado: 1
+  modo: 0
   escenaDestino: Tablero
 --- !u!1 &301004101
 GameObject:
@@ -1331,6 +1332,7 @@ MonoBehaviour:
   boton: {fileID: 301005004}
   nombreModo: Etilico
   implementado: 0
+  modo: 1
   escenaDestino: Tablero
 --- !u!1 &301005101
 GameObject:
@@ -1629,7 +1631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonModoJuego
   boton: {fileID: 301006004}
   nombreModo: Hot
-  implementado: 0
+  implementado: 1
+  modo: 2
   escenaDestino: Tablero
 --- !u!1 &301006101
 GameObject:
@@ -1929,6 +1932,7 @@ MonoBehaviour:
   boton: {fileID: 301007004}
   nombreModo: Pareja
   implementado: 0
+  modo: 3
   escenaDestino: Tablero
 --- !u!1 &301007101
 GameObject:

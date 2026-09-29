@@ -78,6 +78,13 @@ namespace Cubatis
         [SerializeField] private Sprite spriteEvento;
         [SerializeField] private Sprite spriteHot;
 
+        [Header("Sprites del modo Hot (Assets/Boards/Casillas)")]
+        [Tooltip("Tonos 2 y 3 de la casilla Hot (el tono 1 es spriteHot), del mas claro al mas intenso.")]
+        [SerializeField] private Sprite spriteHot2;
+        [SerializeField] private Sprite spriteHot3;
+        [SerializeField] private Sprite spriteStartHot;
+        [SerializeField] private Sprite spriteEndHot;
+
         [SerializeField, HideInInspector] private List<Casilla> casillas = new List<Casilla>();
 
         // Reparto de las 58 casillas numeradas. La suma DEBE ser CeldasNumeradas.
@@ -102,6 +109,9 @@ namespace Cubatis
             spriteStart && spriteEnd && spriteBeber && spriteYoNunca &&
             spriteVerdad && spriteReto && spriteEvento && spriteHot;
 
+        /// <summary>No bloquean la generacion: si faltan, Hot usa Hot.png y START/END normales.</summary>
+        public bool SpritesHotAsignados => spriteHot2 && spriteHot3 && spriteStartHot && spriteEndHot;
+
         public bool MostrarNumeros
         {
             get => mostrarNumeros;
@@ -111,6 +121,73 @@ namespace Cubatis
                 foreach (var c in casillas)
                     if (c != null) c.MostrarNumero(value);
             }
+        }
+
+        // --- Modo de juego (runtime) ----------------------------------------
+        // En Awake: antes de que nadie lea las casillas (GestorPartida coloca
+        // las fichas y la camara encuadra en Start). Solo corre en Play.
+        private void Awake() => AplicarModo(ModoJuego.Actual);
+
+        /// <summary>
+        /// Adapta el tablero guardado al modo elegido en ModosJuegos. Clasico
+        /// (y los modos aun sin variante propia) no toca nada: se juega el
+        /// tablero generado en el editor tal cual, con su reparto mezclado.
+        /// Hot pasa las 58 casillas numeradas a Hot repartiendo sus 3 tonos
+        /// (ver <see cref="RepartirTonos"/>) y cambia START y END por sus
+        /// versiones Hot. Numeros y posiciones no cambian; si falta algun
+        /// sprite Hot se queda el original de esa casilla.
+        /// </summary>
+        public void AplicarModo(ModoPartida modo)
+        {
+            if (modo != ModoPartida.Hot) return;
+
+            Sprite[] tonos = new[] { spriteHot, spriteHot2, spriteHot3 }.Where(s => s != null).ToArray();
+            int numeradas = casillas.Count(c => c != null && c.EsNumerada);
+            List<int> reparto = RepartirTonos(numeradas, tonos.Length, new System.Random());
+
+            int n = 0;
+            foreach (var c in casillas)
+            {
+                if (c == null) continue;
+                if (c.EsNumerada)
+                {
+                    if (tonos.Length > 0) c.CambiarTipo(TipoCasilla.Hot, tonos[reparto[n]]);
+                    n++;
+                }
+                else if (c.Tipo == TipoCasilla.Start && spriteStartHot != null) c.CambiarTipo(TipoCasilla.Start, spriteStartHot);
+                else if (c.Tipo == TipoCasilla.End && spriteEndHot != null) c.CambiarTipo(TipoCasilla.End, spriteEndHot);
+            }
+        }
+
+        /// <summary>
+        /// Indice de tono para cada casilla, en orden del recorrido. Se llena
+        /// con "bolsas" que contienen cada tono una vez en orden aleatorio, y
+        /// si una bolsa empezaria por el tono con el que acabo la anterior se
+        /// intercambian sus dos primeros: nunca hay dos tonos iguales seguidos,
+        /// quedan casi equilibrados (58 = 20/19/19) y no se ve un 1-2-3 regular.
+        /// Cambia en cada partida; es solo estetico, el tipo siempre es Hot.
+        /// </summary>
+        private static List<int> RepartirTonos(int cantidad, int tonos, System.Random rng)
+        {
+            var reparto = new List<int>(cantidad);
+            if (tonos <= 0) return reparto;
+
+            var bolsa = new int[tonos];
+            while (reparto.Count < cantidad)
+            {
+                for (int i = 0; i < tonos; i++) bolsa[i] = i;
+                for (int i = tonos - 1; i > 0; i--)
+                {
+                    int j = rng.Next(i + 1);
+                    (bolsa[i], bolsa[j]) = (bolsa[j], bolsa[i]);
+                }
+                if (tonos > 1 && reparto.Count > 0 && bolsa[0] == reparto[reparto.Count - 1])
+                    (bolsa[0], bolsa[1]) = (bolsa[1], bolsa[0]);
+
+                foreach (int t in bolsa)
+                    if (reparto.Count < cantidad) reparto.Add(t);
+            }
+            return reparto;
         }
 
         // --- Generacion -----------------------------------------------------

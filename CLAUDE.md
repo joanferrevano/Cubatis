@@ -39,7 +39,7 @@ scripts — hay nombres de campo que no coinciden con el destino real):
 
 ```
 SeleccionJugadores --(botón Empezar, "escenaTablero")--> ModosJuegos
-ModosJuegos --(tarjeta "Clásico", única implementada)--> Tablero
+ModosJuegos --(tarjeta "Clásico" o "Hot"; guarda ModoJuego)--> Tablero
 ModosJuegos --(BotonAtras)--> SeleccionJugadores
 Tablero --(victoria real o botón debug)--> Ranking
 Tablero --(BotonSalirTablero, con confirmación)--> ModosJuegos
@@ -73,8 +73,15 @@ añadirla a Build Settings y re-apuntar esos campos.
 - `GeneradorTablero`: genera el tablero en espiral 8x8 (64 celdas: 2 START +
   58 numeradas + bloque 2x2 END centrado) **desde el editor** (botón del
   Inspector, no en runtime). Reparte las categorías de las 58 casillas
-  numeradas al azar evitando consecutivas.
+  numeradas al azar evitando consecutivas. En runtime (`Awake`) aplica
+  `ModoJuego.Actual`: Clásico juega el tablero guardado tal cual; Hot pasa
+  las 58 numeradas a tipo Hot repartiendo 3 tonos (`Hot`, `hot2`, `hot3`,
+  al azar en cada partida, nunca dos iguales seguidos) y cambia START/END
+  por `START_hot`/`END_hot`. Tipos de START/END, números y posiciones
+  intactos.
 - `Casilla`: datos de una casilla ya colocada (índice, número, tipo).
+  `CambiarTipo` cambia tipo + sprite sin recolocarla (solo entre sprites de
+  mismo tamaño y pivot, como cada sprite y su variante Hot).
 - `TipoCasilla`: enum de categorías (Start, Beber, YoNunca, Verdad, Reto,
   Evento, Hot, End).
 - `AjusteCamaraTablero`: encuadra la cámara ortográfica al ancho del tablero.
@@ -90,8 +97,13 @@ añadirla a Build Settings y re-apuntar esos campos.
   compartida entre escenas.
 
 **Modo de juego (escena ModosJuegos)**
-- `BotonModoJuego`: tarjeta de modo; si `implementado`, carga la escena
-  destino; si no, solo avisa por consola (tarjeta clicable pero sin efecto).
+- `BotonModoJuego`: tarjeta de modo; si `implementado`, guarda su `modo` en
+  `ModoJuego` y carga la escena destino; si no, solo avisa por consola
+  (tarjeta clicable pero sin efecto).
+- `ModoJuego`: **estático** con el modo elegido (`ModoPartida`: Clasico,
+  Etilico, Hot, Pareja). Todos los modos comparten la escena `Tablero`, que
+  se adapta al arrancar; no se duplica la escena por modo. Por defecto
+  Clásico (también al dar Play directamente en `Tablero`).
 
 **Ranking (escena Ranking)**
 - `DatosPartida`: **lista estática** con el ranking final (orden de llegada),
@@ -202,12 +214,12 @@ tapa todo lo del mundo y las burbujas quedarían ocultas.
 - Navegación completa entre las 4 escenas reales (ver sección 2).
 
 **A medio hacer:**
-- **Solo el modo "Clásico" está implementado.** Las otras 3 tarjetas de
-  `ModosJuegos` (**Etílico**, **Hot**, **Pareja**) existen visualmente
-  (`BotonModoJuego.implementado = false`) pero no tienen tablero, reglas ni
-  destino propios — al pulsarlas solo se loguea un aviso en consola. Todas
-  apuntan a `escenaDestino: Tablero` en el Inspector pero eso no se usa
-  mientras `implementado` sea `false`.
+- **Modos implementados: Clásico y Hot.** Hot usa el mismo Tablero con las
+  58 casillas numeradas en Hot, pero de momento solo hay 14 frases Hot en
+  `CartaReto`, así que se repiten mucho (faltan las frases nuevas vía CSV).
+  **Etílico** y **Pareja** siguen con `implementado = false` (su `modo` ya
+  está asignado en la tarjeta); para añadirlos basta con definir su variante
+  en `GeneradorTablero.AplicarModo` y activar la tarjeta.
 - No hay escena `MenuPrincipal` (ver aviso en la sección 2) — si se diseña un
   menú principal real, falta crearlo y re-cablear `escenaMenu` en `RankingUI`
   y `BotonSalirTablero`.

@@ -81,6 +81,22 @@ namespace Cubatis
             go.SetActive(visible);
         }
 
+        /// <summary>
+        /// Cambia la categoria y el sprite de una casilla ya colocada, sin
+        /// moverla ni tocar su numero ni su collider (lo usa
+        /// <see cref="GeneradorTablero"/> para los modos de juego). Solo es
+        /// valido entre sprites del mismo tamano y pivot (las numeradas y sus
+        /// tonos Hot son 512x512, START/START_hot 1024x512, END/END_hot
+        /// 1024x1024, todos con pivot centrado): la posicion, el collider y el
+        /// numero se calcularon con el sprite original.
+        /// </summary>
+        public void CambiarTipo(TipoCasilla nuevoTipo, Sprite sprite)
+        {
+            tipo = nuevoTipo;
+            if (render == null) render = GetComponent<SpriteRenderer>();
+            render.sprite = sprite;
+        }
+
         public void MostrarNumero(bool visible)
         {
             if (texto != null) texto.gameObject.SetActive(visible);

@@ -14396,6 +14396,10 @@ MonoBehaviour:
   spriteReto: {fileID: 4281605679027273240, guid: a17ea4ae906a6db41ad1c12929d39a6e, type: 3}
   spriteEvento: {fileID: 8003217498943900417, guid: 5ad855bf943d48d49a917c56ae7f3799, type: 3}
   spriteHot: {fileID: 6552672183948144410, guid: 98882baeeddb85341a0be3734b2e4c28, type: 3}
+  spriteHot2: {fileID: 1943287758089897192, guid: 082c108a5d0746338be2d6580449f57c, type: 3}
+  spriteHot3: {fileID: -7788680305485163318, guid: d9b97afb253d42b595f99aae2176e0ed, type: 3}
+  spriteStartHot: {fileID: 3287642538637129957, guid: 325fe8c51dd24e4194b280971c71616e, type: 3}
+  spriteEndHot: {fileID: 2326106728853358386, guid: 25e6341e1c6c4d85b9a502b4707aed68, type: 3}
   casillas:
   - {fileID: 618592294}
   - {fileID: 885378205}

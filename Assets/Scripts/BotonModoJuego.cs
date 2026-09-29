@@ -5,7 +5,8 @@ namespace Cubatis
 {
     /// <summary>
     /// Tarjeta de un modo de juego en ModosJuegos. Si <see cref="implementado"/>
-    /// esta activo, al pulsarla carga <see cref="escenaDestino"/> con
+    /// esta activo, al pulsarla guarda su <see cref="modo"/> en
+    /// <see cref="ModoJuego.Actual"/> y carga <see cref="escenaDestino"/> con
     /// GestorTransiciones.CargarEscenaConFade, sin tocar Jugadores.Lista ni ningun otro dato de
     /// partida (son estaticos, sobreviven solos al cambio de escena). Si no,
     /// solo avisa por consola: la tarjeta queda clicable pero sin efecto.
@@ -20,6 +21,8 @@ namespace Cubatis
         [SerializeField] private string nombreModo = "Modo";
         [Tooltip("Si esta desactivado, pulsar la tarjeta no hace nada mas que avisar por consola.")]
         [SerializeField] private bool implementado = false;
+        [Tooltip("Modo que se guarda en ModoJuego antes de cargar la escena (todos usan Tablero).")]
+        [SerializeField] private ModoPartida modo = ModoPartida.Clasico;
         [Tooltip("Escena a cargar cuando 'implementado' esta activo.")]
         [SerializeField] private string escenaDestino = "Tablero";
 
@@ -33,7 +36,11 @@ namespace Cubatis
 
         public void Seleccionar()
         {
-            if (implementado) GestorTransiciones.CargarEscenaConFade(escenaDestino);
+            if (implementado)
+            {
+                ModoJuego.Actual = modo;
+                GestorTransiciones.CargarEscenaConFade(escenaDestino);
+            }
             else Debug.LogWarning($"[BotonModoJuego] Modo '{nombreModo}' aun no implementado.");
         }
     }
