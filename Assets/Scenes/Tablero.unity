@@ -22361,6 +22361,63 @@ MeshRenderer:
   m_SortingOrder: 103
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1818451418
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3062301137998315350, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892107051923078402, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
+      propertyPath: m_Name
+      value: BurbujasAmbiente
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6401bf77fbca2904599192ab62f127c9, type: 3}
 --- !u!21 &1820304270
 Material:
   serializedVersion: 8
@@ -26700,19 +26757,6 @@ MonoBehaviour:
   tipo: 3
   render: {fileID: 2116360015}
   texto: {fileID: 65253504}
---- !u!1660057539 &9223372036854775807
-SceneRoots:
-  m_ObjectHideFlags: 0
-  m_Roots:
-  - {fileID: 519420032}
-  - {fileID: 619394802}
-  - {fileID: 574287702}
-  - {fileID: 1200000001}
-  - {fileID: 1608801054}
-  - {fileID: 1905470968}
-  - {fileID: 996287037}
-  - {fileID: 900000061}
-  - {fileID: 574287712}
 --- !u!114 &346369856326115222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26745,22 +26789,6 @@ MonoBehaviour:
   duracionBajada: 0.07
   duracionSubida: 0.12
   desdeCentro: 1
---- !u!114 &5134347587521520134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900000050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
-  escalaPulsado: 0.92
-  duracionBajada: 0.07
-  duracionSubida: 0.12
-  desdeCentro: 1
 --- !u!114 &3882886860493952727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26768,22 +26796,6 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
-  escalaPulsado: 0.92
-  duracionBajada: 0.07
-  duracionSubida: 0.12
-  desdeCentro: 1
---- !u!114 &7144398818874307147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743511256}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
@@ -26809,3 +26821,49 @@ MonoBehaviour:
   balanceo: 0.35
   duracionCiclo: 30
   recorrido: 0.035
+--- !u!114 &5134347587521520134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900000050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
+--- !u!114 &7144398818874307147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743511256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64775c47c5344a1eafda524aa22cfcea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonAnimado
+  escalaPulsado: 0.92
+  duracionBajada: 0.07
+  duracionSubida: 0.12
+  desdeCentro: 1
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 519420032}
+  - {fileID: 1818451418}
+  - {fileID: 619394802}
+  - {fileID: 574287702}
+  - {fileID: 1200000001}
+  - {fileID: 1608801054}
+  - {fileID: 1905470968}
+  - {fileID: 996287037}
+  - {fileID: 900000061}
+  - {fileID: 574287712}

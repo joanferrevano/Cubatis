@@ -31,6 +31,8 @@ namespace Cubatis.EditorTools
         private const string RutaAnillo = CarpetaAvatares + "/avatar_seleccion.png";
         private const int NumAvatares = 12;
         private static readonly Color Morado = new Color(0.29f, 0.14f, 0.36f);
+        /// <summary>Tinte lila que lleva el fondo de patron en esta escena.</summary>
+        private static readonly Color TinteFondo = new Color(0.917f, 0.741f, 1f);
 
         [MenuItem("Cubatis/Construir escena Seleccion de Jugadores")]
         public static void Construir()
@@ -223,9 +225,11 @@ namespace Cubatis.EditorTools
             scaler.matchWidthOrHeight = 0.5f;
             var raiz = (RectTransform)canvasGO.transform;
 
-            var fondo = NuevaImagen("Fondo", raiz, Morado, null);
-            Estirar(fondo.rectTransform);
-            fondo.gameObject.AddComponent<FondoParallax>();
+            // Fondo y burbujas en mundo, no en el Canvas: un Canvas Overlay tapa
+            // todo lo del mundo y las burbujas deben quedar entre fondo y UI.
+            var spriteFondo = ConstructorBurbujasAmbiente.CargarSpriteFondo();
+            if (spriteFondo != null) ConstructorBurbujasAmbiente.CrearFondoMundo(spriteFondo, TinteFondo);
+            ConstructorBurbujasAmbiente.InstanciarBurbujas();
 
             var titulo = NuevoTexto("Titulo", raiz, "¿QUIEN BEBE HOY?", 74, FontStyles.Bold, TextAlignmentOptions.Center);
             Anclar(titulo.rectTransform, new Vector2(0.5f, 1f), new Vector2(960, 150), new Vector2(0, -130));

@@ -104,11 +104,23 @@ añadirla a Build Settings y re-apuntar esos campos.
   vuelta), solo visual. Va en el mismo GameObject que cada `Button` y en el
   `Dado`; no encoge si el botón no es interactuable o el dado no puede tirar.
 - `FondoParallax`: deriva lenta y continua del fondo (vaivén diagonal +
-  balanceo), en el GameObject `Fondo` de las 4 escenas (SpriteRenderer en
-  Tablero, `Image` de UI en el resto). No es scroll por offset de textura
-  porque `Fondo Personajes.png` no es un tile (degradado pintado + vasos
-  colocados a mano): amplía el fondo lo justo y se mueve dentro del margen.
-  El fondo debe ir en su propio GameObject, no en el Canvas raíz.
+  balanceo), en el GameObject `Fondo` de las 4 escenas. No es scroll por
+  offset de textura porque `Fondo Personajes.png` no es un tile (degradado
+  pintado + vasos colocados a mano): amplía el fondo lo justo y se mueve
+  dentro del margen.
+- `FondoCubreCamara`: centra y escala un fondo de mundo para cubrir la
+  cámara (modo *cover*). Solo en las escenas de UI; el Tablero coloca su
+  fondo a mano.
+- `BurbujasAmbiente`: raíz del prefab `Assets/Prefabs/BurbujasAmbiente`
+  (ParticleSystem de Shuriken). El efecto vive en el ParticleSystem; el
+  script solo lo encaja bajo la cámara y lo escala según su tamaño
+  ortográfico (diseñado para tamaño 5).
+
+**Capas de dibujo (todas las escenas)**: el fondo es un `SpriteRenderer` de
+mundo con `FondoJuego` (-1000), después las burbujas (-500), después el
+tablero/fichas (0+, solo Tablero) y por encima de todo la UI en Canvas
+Overlay. Por eso el fondo **no** va dentro del Canvas: un Canvas Overlay
+tapa todo lo del mundo y las burbujas quedarían ocultas.
 
 **Debug / temporal**
 - `BotonDebugGanar`: botón que llama a `GestorPartida.ForzarVictoriaDebug()`.
@@ -122,6 +134,9 @@ añadirla a Build Settings y re-apuntar esos campos.
   de Jugadores` — regenera esa escena entera + prefabs `SlotJugador` /
   `BotonAvatar` + avatares placeholder desde cero. También tiene
   `Reasignar prefabs...` y `Migrar ContenedorSlots a Scroll View`.
+- `ConstructorBurbujasAmbiente`: menú `Cubatis > Burbujas` — genera el prefab
+  `BurbujasAmbiente` (todos los valores del efecto están ahí) y lo aplica a
+  las 4 escenas, migrando los fondos de UI a fondo de mundo. Idempotente.
 
 ## 4. Patrones establecidos (seguirlos en código nuevo)
 
