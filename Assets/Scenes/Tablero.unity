@@ -14400,6 +14400,11 @@ MonoBehaviour:
   spriteHot3: {fileID: -7788680305485163318, guid: d9b97afb253d42b595f99aae2176e0ed, type: 3}
   spriteStartHot: {fileID: 3287642538637129957, guid: 325fe8c51dd24e4194b280971c71616e, type: 3}
   spriteEndHot: {fileID: 2326106728853358386, guid: 25e6341e1c6c4d85b9a502b4707aed68, type: 3}
+  spriteEtilico: {fileID: -7067155518014062209, guid: 138e55212264bbd409432c12a853a102, type: 3}
+  spriteEtilico2: {fileID: -1741560599624239289, guid: c8f3eb269252dc64dbc3f3fa409449d5, type: 3}
+  spriteEtilico3: {fileID: -9200756524595616730, guid: 2775b069ce1bccf4697f7dd6612dbc74, type: 3}
+  spriteStartEtilico: {fileID: -8349607166638011412, guid: 8faa7924ec6a47d43b4510bc8c687069, type: 3}
+  spriteEndEtilico: {fileID: -4333215645774871132, guid: 145202d3a46b2ec4b855727e9cc7b99d, type: 3}
   casillas:
   - {fileID: 618592294}
   - {fileID: 885378205}

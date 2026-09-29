@@ -86,9 +86,11 @@ namespace Cubatis
         /// moverla ni tocar su numero ni su collider (lo usa
         /// <see cref="GeneradorTablero"/> para los modos de juego). Solo es
         /// valido entre sprites del mismo tamano y pivot (las numeradas y sus
-        /// tonos Hot son 512x512, START/START_hot 1024x512, END/END_hot
-        /// 1024x1024, todos con pivot centrado): la posicion, el collider y el
-        /// numero se calcularon con el sprite original.
+        /// tonos Hot/Etilico son 512x512, START y variantes 1024x512, END y
+        /// variantes 1024x1024, todos con pivot centrado): la posicion, el
+        /// collider y el numero se calcularon con el sprite original.
+        /// Tipo y sprite son independientes: el tipo decide la carta que se
+        /// abre y el sprite solo el aspecto (en Etilico no coinciden).
         /// </summary>
         public void CambiarTipo(TipoCasilla nuevoTipo, Sprite sprite)
         {

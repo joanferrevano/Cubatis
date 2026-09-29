@@ -25,6 +25,9 @@ namespace Cubatis.EditorTools
             // Modo Hot
             ("spriteHot2", "hot2"), ("spriteHot3", "hot3"),
             ("spriteStartHot", "START_hot"), ("spriteEndHot", "END_hot"),
+            // Modo Etilico
+            ("spriteEtilico", "etilico"), ("spriteEtilico2", "etilico 2"), ("spriteEtilico3", "etilico 3"),
+            ("spriteStartEtilico", "START_etilico"), ("spriteEndEtilico", "END_etilico"),
         };
 
         public override void OnInspectorGUI()
@@ -50,6 +53,14 @@ namespace Cubatis.EditorTools
             if (!generador.SpritesHotAsignados)
             {
                 EditorGUILayout.HelpBox("Faltan sprites del modo Hot (hot2, hot3, START_hot, END_hot).", MessageType.Warning);
+                if (GUILayout.Button("Cargar sprites desde " + CarpetaSprites, GUILayout.Height(24)))
+                    CargarSprites();
+            }
+
+            // Solo avisa: sin ellos el modo Etilico usa el sprite de cada categoria y START/END normales.
+            if (!generador.SpritesEtilicoAsignados)
+            {
+                EditorGUILayout.HelpBox("Faltan sprites del modo Etilico (etilico, etilico 2, etilico 3, START_etilico, END_etilico).", MessageType.Warning);
                 if (GUILayout.Button("Cargar sprites desde " + CarpetaSprites, GUILayout.Height(24)))
                     CargarSprites();
             }

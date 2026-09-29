@@ -85,6 +85,14 @@ namespace Cubatis
         [SerializeField] private Sprite spriteStartHot;
         [SerializeField] private Sprite spriteEndHot;
 
+        [Header("Sprites del modo Etilico (Assets/Boards/Casillas)")]
+        [Tooltip("Los 3 tonos de fondo de las casillas numeradas en Etilico, sea cual sea su categoria.")]
+        [SerializeField] private Sprite spriteEtilico;
+        [SerializeField] private Sprite spriteEtilico2;
+        [SerializeField] private Sprite spriteEtilico3;
+        [SerializeField] private Sprite spriteStartEtilico;
+        [SerializeField] private Sprite spriteEndEtilico;
+
         [SerializeField, HideInInspector] private List<Casilla> casillas = new List<Casilla>();
 
         // Reparto de las 58 casillas numeradas. La suma DEBE ser CeldasNumeradas.
@@ -96,6 +104,17 @@ namespace Cubatis
             (TipoCasilla.Reto,     9),
             (TipoCasilla.Evento,   5),
             (TipoCasilla.Hot,      5),
+        };
+
+        // Reparto del modo Etilico: mas peso a Beber y sin Hot. Suma 58 igual.
+        private static readonly (TipoCasilla tipo, int cantidad)[] RepartoEtilico =
+        {
+            (TipoCasilla.Beber,   30),
+            (TipoCasilla.YoNunca, 10),
+            (TipoCasilla.Verdad,   7),
+            (TipoCasilla.Reto,     7),
+            (TipoCasilla.Evento,   4),
+            (TipoCasilla.Hot,      0),
         };
 
         // --- Consulta del tablero ya generado -------------------------------
@@ -111,6 +130,10 @@ namespace Cubatis
 
         /// <summary>No bloquean la generacion: si faltan, Hot usa Hot.png y START/END normales.</summary>
         public bool SpritesHotAsignados => spriteHot2 && spriteHot3 && spriteStartHot && spriteEndHot;
+
+        /// <summary>No bloquean la generacion: si faltan, Etilico usa el sprite de cada categoria y START/END normales.</summary>
+        public bool SpritesEtilicoAsignados =>
+            spriteEtilico && spriteEtilico2 && spriteEtilico3 && spriteStartEtilico && spriteEndEtilico;
 
         public bool MostrarNumeros
         {
@@ -135,12 +158,20 @@ namespace Cubatis
         /// Hot pasa las 58 casillas numeradas a Hot repartiendo sus 3 tonos
         /// (ver <see cref="RepartirTonos"/>) y cambia START y END por sus
         /// versiones Hot. Numeros y posiciones no cambian; si falta algun
-        /// sprite Hot se queda el original de esa casilla.
+        /// sprite Hot se queda el original de esa casilla. Etilico, al reves
+        /// que Hot, SI cambia las categorias (ver <see cref="AplicarEtilico"/>).
         /// </summary>
         public void AplicarModo(ModoPartida modo)
         {
-            if (modo != ModoPartida.Hot) return;
+            switch (modo)
+            {
+                case ModoPartida.Hot: AplicarHot(); break;
+                case ModoPartida.Etilico: AplicarEtilico(); break;
+            }
+        }
 
+        private void AplicarHot()
+        {
             Sprite[] tonos = new[] { spriteHot, spriteHot2, spriteHot3 }.Where(s => s != null).ToArray();
             int numeradas = casillas.Count(c => c != null && c.EsNumerada);
             List<int> reparto = RepartirTonos(numeradas, tonos.Length, new System.Random());
@@ -156,6 +187,44 @@ namespace Cubatis
                 }
                 else if (c.Tipo == TipoCasilla.Start && spriteStartHot != null) c.CambiarTipo(TipoCasilla.Start, spriteStartHot);
                 else if (c.Tipo == TipoCasilla.End && spriteEndHot != null) c.CambiarTipo(TipoCasilla.End, spriteEndHot);
+            }
+        }
+
+        /// <summary>
+        /// Etilico es una mezcla como Clasico pero con otro reparto
+        /// (<see cref="RepartoEtilico"/>), asi que no sirve el del tablero
+        /// guardado: se rebaraja en cada partida. Categoria y aspecto van por
+        /// separado: el tipo (la carta que se abre) sigue el reparto, y el
+        /// sprite es siempre uno de los 3 tonos Etilico, repartidos igual que
+        /// los de Hot. Sin sprites Etilico, cada casilla usa el de su categoria
+        /// para que lo que se ve no contradiga la carta que abre.
+        /// </summary>
+        private void AplicarEtilico()
+        {
+            var numeradas = casillas.Where(c => c != null && c.EsNumerada).ToList();
+            var conteo = RepartoEtilico.ToDictionary(r => r.tipo, r => r.cantidad);
+            if (conteo.Values.Sum() != numeradas.Count)
+            {
+                Debug.LogError($"[Tablero] RepartoEtilico suma {conteo.Values.Sum()} y hay {numeradas.Count} casillas numeradas. Se juega el tablero Clasico.");
+                return;
+            }
+
+            var rng = new System.Random();
+            List<TipoCasilla> categorias = evitarConsecutivas
+                ? BarajarMinimasRepeticiones(conteo, rng)
+                : BarajarBolsa(conteo, rng);
+
+            Sprite[] tonos = new[] { spriteEtilico, spriteEtilico2, spriteEtilico3 }.Where(s => s != null).ToArray();
+            List<int> reparto = RepartirTonos(numeradas.Count, tonos.Length, rng);
+
+            for (int i = 0; i < numeradas.Count; i++)
+                numeradas[i].CambiarTipo(categorias[i], tonos.Length > 0 ? tonos[reparto[i]] : SpriteDe(categorias[i]));
+
+            foreach (var c in casillas)
+            {
+                if (c == null) continue;
+                if (c.Tipo == TipoCasilla.Start && spriteStartEtilico != null) c.CambiarTipo(TipoCasilla.Start, spriteStartEtilico);
+                else if (c.Tipo == TipoCasilla.End && spriteEndEtilico != null) c.CambiarTipo(TipoCasilla.End, spriteEndEtilico);
             }
         }
 
@@ -411,6 +480,82 @@ namespace Cubatis
 
             Debug.LogWarning("[Tablero] No se pudo evitar categorias consecutivas; se usa un barajado simple.");
             return BarajarBolsa(conteo, rng);
+        }
+
+        /// <summary>
+        /// Variante de <see cref="BarajarSinConsecutivas"/> para repartos en
+        /// los que no repetir es imposible: con m casillas de una categoria en
+        /// n huecos hay como minimo max(0, 2m - n - 1) parejas seguidas iguales
+        /// (Etilico: 30 Beber en 58 -> 1). Cada paso elige al azar, ponderado
+        /// por las que quedan, solo entre las categorias que no suben ese
+        /// minimo, asi que nunca se atasca ni repite mas de lo inevitable. Con
+        /// un reparto que si permite no repetir se comporta como la original.
+        /// </summary>
+        private static List<TipoCasilla> BarajarMinimasRepeticiones(Dictionary<TipoCasilla, int> conteo, System.Random rng)
+        {
+            var quedan = new Dictionary<TipoCasilla, int>(conteo);
+            var tipos = quedan.Keys.ToList();
+            int total = quedan.Values.Sum();
+            var lista = new List<TipoCasilla>(total);
+            TipoCasilla? previa = null;
+            var opciones = new List<TipoCasilla>();
+
+            while (lista.Count < total)
+            {
+                int huecosDespues = total - lista.Count - 1;
+                int mejor = int.MaxValue;
+                opciones.Clear();
+                foreach (var t in tipos)
+                {
+                    if (quedan[t] == 0) continue;
+                    quedan[t]--;
+                    int coste = (t == previa ? 1 : 0) + RepeticionesMinimas(quedan, huecosDespues, t);
+                    quedan[t]++;
+                    if (coste < mejor) { mejor = coste; opciones.Clear(); }
+                    if (coste == mejor) opciones.Add(t);
+                }
+
+                TipoCasilla elegida;
+                bool puedeRepetir = previa.HasValue && opciones.Contains(previa.Value);
+                if (puedeRepetir && opciones.Count == 1) elegida = previa.Value;
+                // La repeticion inevitable puede ir detras de cualquiera de las
+                // quedan[previa] casillas de esa categoria que faltan: tomarla
+                // ahora con probabilidad 1/quedan la reparte uniforme por el
+                // recorrido. Ponderando por cantidad, como el resto, caeria casi
+                // siempre en las primeras casillas.
+                else if (puedeRepetir && rng.Next(quedan[previa.Value]) == 0) elegida = previa.Value;
+                else
+                {
+                    if (puedeRepetir) opciones.Remove(previa.Value);
+                    int tiro = rng.Next(opciones.Sum(t => quedan[t]));
+                    elegida = opciones[opciones.Count - 1];
+                    foreach (var t in opciones)
+                    {
+                        tiro -= quedan[t];
+                        if (tiro < 0) { elegida = t; break; }
+                    }
+                }
+
+                lista.Add(elegida);
+                quedan[elegida]--;
+                previa = elegida;
+            }
+            return lista;
+        }
+
+        // Cota exacta de parejas seguidas iguales que dejaran 'quedan' en
+        // 'huecos' casillas, contando como pareja empezar por 'previa'. Solo
+        // una categoria puede pasar de la mitad, asi que basta el maximo.
+        private static int RepeticionesMinimas(Dictionary<TipoCasilla, int> quedan, int huecos, TipoCasilla previa)
+        {
+            int peor = 0;
+            foreach (var kv in quedan)
+            {
+                if (kv.Value == 0) continue;
+                int extra = kv.Key == previa ? 1 : 0;
+                peor = Mathf.Max(peor, 2 * (kv.Value + extra) - (huecos + extra) - 1);
+            }
+            return peor;
         }
 
         // --- Depuracion ---------------------------------------------------

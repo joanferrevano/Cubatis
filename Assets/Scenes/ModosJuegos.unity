@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cubatis.BotonModoJuego
   boton: {fileID: 301005004}
   nombreModo: Etilico
-  implementado: 0
+  implementado: 1
   modo: 1
   escenaDestino: Tablero
 --- !u!1 &301005101
