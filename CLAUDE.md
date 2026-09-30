@@ -39,7 +39,7 @@ scripts — hay nombres de campo que no coinciden con el destino real):
 
 ```
 SeleccionJugadores --(botón Empezar, "escenaTablero")--> ModosJuegos
-ModosJuegos --(tarjeta "Clásico", "Etílico" o "Hot"; guarda ModoJuego)--> Tablero
+ModosJuegos --(tarjeta "Clásico", "Etílico", "Hot" o "Pareja"; guarda ModoJuego)--> Tablero
 ModosJuegos --(BotonAtras)--> SeleccionJugadores
 Tablero --(victoria real o botón debug)--> Ranking
 Tablero --(BotonSalirTablero, con confirmación)--> ModosJuegos
@@ -85,13 +85,25 @@ añadirla a Build Settings y re-apuntar esos campos.
   `START_etilico`/`END_etilico`. 30 Beber en 58 casillas no caben sin dos
   seguidas (máximo 29), así que usa `BarajarMinimasRepeticiones`: siempre
   exactamente 1 pareja Beber-Beber y el resto alterno. Clásico sigue con
-  `BarajarSinConsecutivas` en el editor.
+  `BarajarSinConsecutivas` en el editor. Pareja sigue la misma estructura
+  que Etílico: rebaraja las 58 numeradas solo entre sus 4 categorías
+  (15 Conocimiento, 15 Conexion, 14 Confesion, 14 RetoPareja, sin dos
+  iguales seguidas) y las pinta con 4 tonos `casillas_pareja1-4`
+  (`RepartirTonos` admite cualquier número de tonos); START/END pasan a
+  `START_parejas`/`END_parejas`.
 - `Casilla`: datos de una casilla ya colocada (índice, número, tipo).
   `CambiarTipo` cambia tipo + sprite sin recolocarla (solo entre sprites de
   mismo tamaño y pivot, como cada sprite y su variante Hot/Etílico). Tipo
   (qué carta abre) y sprite (aspecto) son independientes.
 - `TipoCasilla`: enum de categorías (Start, Beber, YoNunca, Verdad, Reto,
-  Evento, Hot, End).
+  Evento, Hot, End) + las del modo Pareja **después de End con valor
+  explícito** (Conocimiento=8, Conexion=9, Confesion=10, RetoPareja=11), para
+  no desplazar los enteros ya serializados. `RetoPareja` es distinta de
+  `Reto` (otras cartas, otras frases).
+- Frases de `CartaReto`: se importan por menú contextual desde CSV —
+  `frases.csv` (CATEGORIA, COLOR, FRASE) para las clásicas y
+  `modo_pareja.csv` (CATEGORIA, FRASE, con comillas) para las de Pareja. Cada
+  CSV tiene su propia tabla de alias (en el de Pareja, "Reto" = RetoPareja).
 - `AjusteCamaraTablero`: encuadra la cámara ortográfica al ancho del tablero.
 - `FondoJuego`: fuerza el sorting order del fondo por detrás de todo.
 - `BotonSalirTablero`: botón de abandonar partida con confirmación; se
@@ -222,12 +234,11 @@ tapa todo lo del mundo y las burbujas quedarían ocultas.
 - Navegación completa entre las 4 escenas reales (ver sección 2).
 
 **A medio hacer:**
-- **Modos implementados: Clásico, Etílico y Hot.** Hot usa el mismo Tablero
-  con las 58 casillas numeradas en Hot, pero de momento solo hay 14 frases
-  Hot en `CartaReto`, así que se repiten mucho (faltan las frases nuevas vía
-  CSV). **Pareja** sigue con `implementado = false` (su `modo` ya está
-  asignado en la tarjeta); para añadirlo basta con definir su variante en
-  `GeneradorTablero.AplicarModo` y activar la tarjeta.
+- **Los 4 modos están implementados (Clásico, Etílico, Hot y Pareja).** Hot
+  usa el mismo Tablero con las 58 casillas numeradas en Hot, pero de momento
+  solo hay 14 frases Hot en `CartaReto`, así que se repiten mucho (faltan las
+  frases nuevas vía CSV). Pareja tiene 85 frases (de `modo_pareja.csv`)
+  repartidas entre sus 4 cartas.
 - No hay escena `MenuPrincipal` (ver aviso en la sección 2) — si se diseña un
   menú principal real, falta crearlo y re-cablear `escenaMenu` en `RankingUI`
   y `BotonSalirTablero`.

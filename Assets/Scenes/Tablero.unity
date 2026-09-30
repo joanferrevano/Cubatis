@@ -12866,6 +12866,107 @@ MonoBehaviour:
     - "Yo nunca me he arrepentido de una publicaci\xF3n en redes sociales."
     - "Yo nunca he fingido conocer una canci\xF3n para no quedar mal."
     - Yo nunca he llegado tarde por quedarme dormido con la alarma puesta.
+  - tipo: 8
+    portada: {fileID: -3855097013791195021, guid: 08ea1e615b6ec9e4c93dadb45efcfcc6, type: 3}
+    plantilla: {fileID: 796433871350149841, guid: edbe7e385faae464cbcd7633d00e7d48, type: 3}
+    frases:
+    - "Adivina qu\xE9 comida pedir\xEDa tu pareja si ma\xF1ana fuera su \xFAltimo d\xEDa en la Tierra."
+    - "Di en voz alta la canci\xF3n que tu pareja canta cuando cree que nadie la escucha. Si fallas, bebes."
+    - "\xBFQui\xE9n de los dos tarda m\xE1s en arreglarse para salir? Contestad a la vez contando hasta tres."
+    - "Ordena de m\xE1s a menos lo que m\xE1s le molesta a tu pareja: que la despierten, que la hagan esperar o que la interrumpan."
+    - "Adivina qu\xE9 emoji usa tu pareja m\xE1s a menudo cuando te escribe."
+    - "\xBFTe acuerdas de qu\xE9 llevaba puesto tu pareja el d\xEDa que os conocisteis? Descr\xEDbelo con todo detalle."
+    - "Di cu\xE1l es el mayor miedo de tu pareja. Si aciertas, repartes un trago."
+    - "\xBFQui\xE9n dijo \"te quiero\" primero? Se\xF1alad a la vez sin pensarlo."
+    - "Adivina qu\xE9 superpoder elegir\xEDa tu pareja y explica por qu\xE9 crees que lo escoger\xEDa."
+    - "Nombra tres series que tu pareja haya visto m\xE1s de una vez."
+    - "\xBFQu\xE9 plato no pedir\xEDa nunca tu pareja en un restaurante? Solo tienes una oportunidad."
+    - "Tu pareja piensa en un sitio al que le encantar\xEDa viajar. Tienes tres intentos para adivinarlo."
+    - "\xBFQui\xE9n de los dos es m\xE1s capaz de perderse aun llevando el GPS puesto? Votad a la vez."
+    - "Explica c\xF3mo se toma el caf\xE9 tu pareja por la ma\xF1ana, sin olvidarte de ning\xFAn detalle."
+    - "Intenta recordar el primer mensaje que te envi\xF3 tu pareja, o por lo menos de qu\xE9 iba."
+    - "Ordena estos planes seg\xFAn le apetecer\xEDan a tu pareja: sof\xE1 y peli, cena fuera o escapada de fin de semana."
+    - "Di cu\xE1l es la man\xEDa m\xE1s rara de tu pareja. Si no est\xE1 de acuerdo, bebes."
+    - "Adivina qui\xE9n fue el primer famoso del que se colg\xF3 tu pareja."
+    - "Si a tu pareja le cayeran 1.000 euros del cielo, \xBFen qu\xE9 se los gastar\xEDa? Que te diga si has acertado."
+    - "\xBFQu\xE9 asignatura odiaba con todas sus fuerzas tu pareja en el instituto?"
+    - "\xBFQui\xE9n de los dos pide perd\xF3n antes despu\xE9s de una discusi\xF3n? Se\xF1alad a la vez."
+    - "Adivina cu\xE1l es la muletilla que m\xE1s repite tu pareja al hablar."
+    - "Di la fecha exacta de vuestro aniversario. Si dudas m\xE1s de cinco segundos, bebes."
+    - "\xBFQu\xE9 pel\xEDcula hace llorar a tu pareja sin remedio? Tienes dos intentos."
+    - "Di qu\xE9 parte de su cuerpo le gusta m\xE1s a tu pareja de s\xED misma."
+  - tipo: 9
+    portada: {fileID: -333494277192435215, guid: 61138368e0a538f4984f44e964e232b5, type: 3}
+    plantilla: {fileID: 8458426107576525384, guid: 0f15203b26ecc704aa696cddc28c1182, type: 3}
+    frases:
+    - "Miraos a los ojos durante 30 segundos sin re\xEDros. El primero que se r\xEDa, bebe."
+    - "Cogeos de la mano y no os solt\xE9is hasta vuestro pr\xF3ximo turno."
+    - "Dale a tu pareja un abrazo de 20 segundos y no la sueltes antes de tiempo."
+    - "Pon la mano en el pecho de tu pareja y no la quites hasta que notes su coraz\xF3n."
+    - "Sus\xFArrale al o\xEDdo algo que te encante de ella."
+    - "Juntad las frentes y respirad a la vez durante diez respiraciones."
+    - "Dale un beso en la mejilla, otro en la frente y otro en la mano, en el orden que prefieras."
+    - "Ponte detr\xE1s de tu pareja y dale un masaje en los hombros durante un minuto."
+    - "Dile a tu pareja cu\xE1nto la quieres solo con la mirada, sin decir nada, durante 15 segundos."
+    - "Entrelazad los dedos y contad un recuerdo bonito juntos: uno lo empieza y el otro lo termina."
+    - "Cierra los ojos y acaricia la cara de tu pareja como si quisieras memorizarla."
+    - "Bailad abrazados una canci\xF3n lenta imaginaria durante 30 segundos."
+    - "Sentaos espalda con espalda y levantaos a la vez sin usar las manos."
+    - "Escribe con el dedo una palabra bonita en la espalda de tu pareja. Tiene que adivinarla."
+    - "Dale las gracias a tu pareja por algo concreto que haya hecho por ti esta semana."
+    - "Poneos cara a cara y copiad los gestos del otro como si fuerais un espejo durante 30 segundos."
+    - "Dale un beso de esquimal y estrena un apodo cari\xF1oso para tu pareja."
+    - "Apoya la cabeza en el hombro de tu pareja y qu\xE9date as\xED durante toda la siguiente ronda."
+    - "Coge la mano de tu pareja y dale un beso en cada nudillo."
+    - "Miraos a los ojos y decid a la vez una palabra que defina vuestra relaci\xF3n."
+  - tipo: 10
+    portada: {fileID: -4268472478827362279, guid: a3fc8b1530657314cb5cf1bac1659269, type: 3}
+    plantilla: {fileID: -2197174042129990372, guid: 6326583cbeb48714c8423026b649cd4b, type: 3}
+    frases:
+    - "\xBFQu\xE9 fue lo primero que pensaste de tu pareja cuando la viste?"
+    - "Confiesa en qu\xE9 momento te diste cuenta de que te estabas enamorando."
+    - "\xBFQu\xE9 es lo que m\xE1s te preocupa de la relaci\xF3n? Si no quieres contestar, bebe dos tragos."
+    - "Cuenta algo que te d\xE9 verg\xFCenza pedirle a tu pareja."
+    - "\xBFHay algo que hace tu pareja sin darse cuenta y que te parece irresistible?"
+    - "Confiesa cu\xE1l ha sido el momento m\xE1s inc\xF3modo que hab\xE9is vivido juntos."
+    - "\xBFCu\xE1l es tu mayor inseguridad cuando est\xE1s con tu pareja?"
+    - "\xBFQu\xE9 prenda te encanta verle puesta a tu pareja\u2026 y cu\xE1l prefieres que se quite?"
+    - "\xBFAlguna vez has sentido celos y te lo has callado? Cu\xE9ntalo."
+    - "Confiesa algo que fingiste que te gustaba al principio solo para impresionar a tu pareja."
+    - "\xBFQu\xE9 es lo que m\xE1s echar\xEDas de menos de tu pareja si ma\xF1ana no estuviera?"
+    - "\xBFCu\xE1l es el beso vuestro que mejor recuerdas? Descr\xEDbelo."
+    - "\xBFQu\xE9 te gustar\xEDa que tu pareja te dijera m\xE1s a menudo?"
+    - "Confiesa un plan de cita que te encantar\xEDa hacer y que nunca te has atrevido a proponer."
+    - "\xBFQu\xE9 parte del cuerpo de tu pareja miras cuando cree que no te das cuenta?"
+    - "\xBFHay algo de vuestra rutina que te gustar\xEDa cambiar y todav\xEDa no te has atrevido a decir?"
+    - "\xBFQu\xE9 es lo m\xE1s atrevido que se te ha pasado por la cabeza hacer con tu pareja en un sitio p\xFAblico? Sin entrar en detalles."
+    - "Cuenta una vez en la que tu pareja te hizo sentir especialmente querido o querida."
+    - "\xBFCu\xE1l es el mensaje de tu pareja que m\xE1s veces has rele\xEDdo?"
+    - "\xBFQu\xE9 te da miedo que se pierda en vuestra relaci\xF3n con el paso del tiempo?"
+  - tipo: 11
+    portada: {fileID: -5773421472356872949, guid: 8b0e6e9a828d5e84188d5e31743b9379, type: 3}
+    plantilla: {fileID: 397917170784151079, guid: 20baf3ffe18d4d6478d00dd6ced7e5b7, type: 3}
+    frases:
+    - "Representa con m\xEDmica una pel\xEDcula que hay\xE1is visto juntos. Tu pareja tiene un minuto para adivinarla."
+    - "Inventad un c\xF3digo secreto con gestos para deciros \"v\xE1monos ya\" en una fiesta."
+    - "Contad por turnos recuerdos de vuestra relaci\xF3n. El primero que se quede en blanco, bebe."
+    - "Haz re\xEDr a tu pareja en menos de 30 segundos sin tocarla. Si no lo consigues, bebes."
+    - "Cread una historia juntos diciendo una palabra cada uno hasta completar tres frases."
+    - "Dise\xF1ad en un minuto vuestra cita ideal: el sitio, la comida y un plan sorpresa."
+    - "Imita a tu pareja reci\xE9n despertada por la ma\xF1ana. Ella decide si ha sido fiel o exagerado."
+    - "Tararea una canci\xF3n importante para vosotros. Si tu pareja no la adivina en tres intentos, bebe."
+    - "Poneos un nombre art\xEDstico de pareja y presentaos como si salierais en un programa de la tele."
+    - "Duelo de miradas: el primero que parpadee o se r\xEDa, bebe."
+    - "Describe a tu pareja con solo tres palabras. Luego ella hace lo mismo contigo sin repetir ninguna."
+    - "Inventad un baile de pareja de 10 segundos y representadlo ahora mismo."
+    - "Piedra, papel o tijera al mejor de tres. Quien pierda le dedica un piropo al ganador."
+    - "Cuenta el chiste m\xE1s malo que te sepas. Si tu pareja se r\xEDe, bebe ella; si no, bebes t\xFA."
+    - "Escribid en secreto la canci\xF3n que m\xE1s os representa como pareja. Si coincid\xEDs, repart\xEDs un trago cada uno."
+    - "Hazle a tu pareja una declaraci\xF3n de amor dram\xE1tica como si estuvierais en una telenovela."
+    - "Imitad por turnos a un amigo en com\xFAn hasta que el otro adivine de qui\xE9n se trata."
+    - "Inventad juntos el nombre y la receta de un c\xF3ctel que os represente."
+    - "Tienes 20 segundos para decir cinco cosas que hay\xE1is hecho juntos por primera vez."
+    - "Sin hablar, consigue que tu pareja adivine tu momento favorito de vuestra relaci\xF3n."
   altoRelativoPantalla: 0.72
   colorFondo: {r: 0, g: 0, b: 0, a: 0.78}
   fuenteReto: {fileID: 11400000, guid: 56eba83c6eb644548b9db596800939e3, type: 2}
@@ -14405,6 +14506,12 @@ MonoBehaviour:
   spriteEtilico3: {fileID: -9200756524595616730, guid: 2775b069ce1bccf4697f7dd6612dbc74, type: 3}
   spriteStartEtilico: {fileID: -8349607166638011412, guid: 8faa7924ec6a47d43b4510bc8c687069, type: 3}
   spriteEndEtilico: {fileID: -4333215645774871132, guid: 145202d3a46b2ec4b855727e9cc7b99d, type: 3}
+  spritePareja: {fileID: -7248269382891731961, guid: ca0abd0d20ec1b048bb55987ae234db1, type: 3}
+  spritePareja2: {fileID: 593990290265971083, guid: 4ea996ef70b866c49a98d5966d079855, type: 3}
+  spritePareja3: {fileID: 227208313554667997, guid: cb9cd374dee286f45a6f72fdb73ee18c, type: 3}
+  spritePareja4: {fileID: -3491664814783190761, guid: ca81b27fdeaddee48bf0fd0a798f2bf6, type: 3}
+  spriteStartPareja: {fileID: -1692393121860644799, guid: 364d03d1d7f8e9946acb6402d90426f2, type: 3}
+  spriteEndPareja: {fileID: 2004942241857932544, guid: 5ed0d5bb005e0304298189a8f50eca71, type: 3}
   casillas:
   - {fileID: 618592294}
   - {fileID: 885378205}

@@ -93,6 +93,15 @@ namespace Cubatis
         [SerializeField] private Sprite spriteStartEtilico;
         [SerializeField] private Sprite spriteEndEtilico;
 
+        [Header("Sprites del modo Pareja (Assets/Boards/Casillas)")]
+        [Tooltip("Los 4 tonos de fondo de las casillas numeradas en Pareja, sea cual sea su categoria.")]
+        [SerializeField] private Sprite spritePareja;
+        [SerializeField] private Sprite spritePareja2;
+        [SerializeField] private Sprite spritePareja3;
+        [SerializeField] private Sprite spritePareja4;
+        [SerializeField] private Sprite spriteStartPareja;
+        [SerializeField] private Sprite spriteEndPareja;
+
         [SerializeField, HideInInspector] private List<Casilla> casillas = new List<Casilla>();
 
         // Reparto de las 58 casillas numeradas. La suma DEBE ser CeldasNumeradas.
@@ -117,6 +126,16 @@ namespace Cubatis
             (TipoCasilla.Hot,      0),
         };
 
+        // Reparto del modo Pareja: solo sus 4 categorias, a partes casi
+        // iguales (58 = 15 + 15 + 14 + 14).
+        private static readonly (TipoCasilla tipo, int cantidad)[] RepartoPareja =
+        {
+            (TipoCasilla.Conocimiento, 15),
+            (TipoCasilla.Conexion,     15),
+            (TipoCasilla.Confesion,    14),
+            (TipoCasilla.RetoPareja,   14),
+        };
+
         // --- Consulta del tablero ya generado -------------------------------
         public IReadOnlyList<Casilla> Casillas => casillas;
         public int Total => casillas.Count;
@@ -134,6 +153,10 @@ namespace Cubatis
         /// <summary>No bloquean la generacion: si faltan, Etilico usa el sprite de cada categoria y START/END normales.</summary>
         public bool SpritesEtilicoAsignados =>
             spriteEtilico && spriteEtilico2 && spriteEtilico3 && spriteStartEtilico && spriteEndEtilico;
+
+        /// <summary>No bloquean la generacion: si faltan, Pareja deja el sprite que tuviera cada casilla y START/END normales.</summary>
+        public bool SpritesParejaAsignados =>
+            spritePareja && spritePareja2 && spritePareja3 && spritePareja4 && spriteStartPareja && spriteEndPareja;
 
         public bool MostrarNumeros
         {
@@ -159,7 +182,9 @@ namespace Cubatis
         /// (ver <see cref="RepartirTonos"/>) y cambia START y END por sus
         /// versiones Hot. Numeros y posiciones no cambian; si falta algun
         /// sprite Hot se queda el original de esa casilla. Etilico, al reves
-        /// que Hot, SI cambia las categorias (ver <see cref="AplicarEtilico"/>).
+        /// que Hot, SI cambia las categorias (ver <see cref="AplicarEtilico"/>),
+        /// y Pareja igual pero con sus propias categorias (ver
+        /// <see cref="AplicarPareja"/>).
         /// </summary>
         public void AplicarModo(ModoPartida modo)
         {
@@ -167,6 +192,7 @@ namespace Cubatis
             {
                 case ModoPartida.Hot: AplicarHot(); break;
                 case ModoPartida.Etilico: AplicarEtilico(); break;
+                case ModoPartida.Pareja: AplicarPareja(); break;
             }
         }
 
@@ -229,12 +255,52 @@ namespace Cubatis
         }
 
         /// <summary>
+        /// Misma estructura que Etilico: el tablero guardado es Clasico, asi
+        /// que se rebaraja en cada partida con <see cref="RepartoPareja"/>, y
+        /// el aspecto va aparte con los 4 tonos Pareja repartidos en bolsas.
+        /// Con 15 como maximo por categoria en 58 casillas siempre cabe sin
+        /// dos iguales seguidas, y BarajarMinimasRepeticiones lo consigue sin
+        /// reintentos. Las categorias Pareja no tienen sprite propio al que
+        /// volver, asi que sin sprites Pareja cada casilla conserva el suyo.
+        /// </summary>
+        private void AplicarPareja()
+        {
+            var numeradas = casillas.Where(c => c != null && c.EsNumerada).ToList();
+            var conteo = RepartoPareja.ToDictionary(r => r.tipo, r => r.cantidad);
+            if (conteo.Values.Sum() != numeradas.Count)
+            {
+                Debug.LogError($"[Tablero] RepartoPareja suma {conteo.Values.Sum()} y hay {numeradas.Count} casillas numeradas. Se juega el tablero Clasico.");
+                return;
+            }
+
+            var rng = new System.Random();
+            List<TipoCasilla> categorias = evitarConsecutivas
+                ? BarajarMinimasRepeticiones(conteo, rng)
+                : BarajarBolsa(conteo, rng);
+
+            Sprite[] tonos = new[] { spritePareja, spritePareja2, spritePareja3, spritePareja4 }.Where(s => s != null).ToArray();
+            List<int> reparto = RepartirTonos(numeradas.Count, tonos.Length, rng);
+
+            for (int i = 0; i < numeradas.Count; i++)
+                numeradas[i].CambiarTipo(categorias[i], tonos.Length > 0 ? tonos[reparto[i]] : numeradas[i].Render.sprite);
+
+            foreach (var c in casillas)
+            {
+                if (c == null) continue;
+                if (c.Tipo == TipoCasilla.Start && spriteStartPareja != null) c.CambiarTipo(TipoCasilla.Start, spriteStartPareja);
+                else if (c.Tipo == TipoCasilla.End && spriteEndPareja != null) c.CambiarTipo(TipoCasilla.End, spriteEndPareja);
+            }
+        }
+
+        /// <summary>
         /// Indice de tono para cada casilla, en orden del recorrido. Se llena
         /// con "bolsas" que contienen cada tono una vez en orden aleatorio, y
         /// si una bolsa empezaria por el tono con el que acabo la anterior se
         /// intercambian sus dos primeros: nunca hay dos tonos iguales seguidos,
-        /// quedan casi equilibrados (58 = 20/19/19) y no se ve un 1-2-3 regular.
-        /// Cambia en cada partida; es solo estetico, el tipo siempre es Hot.
+        /// quedan casi equilibrados (58 con 3 tonos = 20/19/19, con 4 =
+        /// 15/15/14/14) y no se ve un 1-2-3 regular. Sirve para cualquier
+        /// numero de tonos (Hot y Etilico 3, Pareja 4). Cambia en cada
+        /// partida y es solo estetico: no toca el tipo de la casilla.
         /// </summary>
         private static List<int> RepartirTonos(int cantidad, int tonos, System.Random rng)
         {

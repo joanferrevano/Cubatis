@@ -28,6 +28,10 @@ namespace Cubatis.EditorTools
             // Modo Etilico
             ("spriteEtilico", "etilico"), ("spriteEtilico2", "etilico 2"), ("spriteEtilico3", "etilico 3"),
             ("spriteStartEtilico", "START_etilico"), ("spriteEndEtilico", "END_etilico"),
+            // Modo Pareja
+            ("spritePareja", "casillas_pareja1"), ("spritePareja2", "casillas_pareja2"),
+            ("spritePareja3", "casillas_pareja3"), ("spritePareja4", "casillas_pareja4"),
+            ("spriteStartPareja", "START_parejas"), ("spriteEndPareja", "END_parejas"),
         };
 
         public override void OnInspectorGUI()
@@ -65,6 +69,14 @@ namespace Cubatis.EditorTools
                     CargarSprites();
             }
 
+            // Solo avisa: sin ellos el modo Pareja deja el sprite de cada casilla y START/END normales.
+            if (!generador.SpritesParejaAsignados)
+            {
+                EditorGUILayout.HelpBox("Faltan sprites del modo Pareja (casillas_pareja1-4, START_parejas, END_parejas).", MessageType.Warning);
+                if (GUILayout.Button("Cargar sprites desde " + CarpetaSprites, GUILayout.Height(24)))
+                    CargarSprites();
+            }
+
             EditorGUILayout.Space(4);
             GUI.enabled = generador.SpritesAsignados;
             GUI.backgroundColor = new Color(0.5f, 0.85f, 0.5f);
@@ -92,7 +104,8 @@ namespace Cubatis.EditorTools
                 var numeradas = generador.Casillas.Where(c => c != null && c.EsNumerada).ToList();
                 string resumen = $"Objetos: {generador.Total}  (1 START + {numeradas.Count} numeradas + 1 END)\n" +
                     string.Join("   ", System.Enum.GetValues(typeof(TipoCasilla)).Cast<TipoCasilla>()
-                        .Where(t => t != TipoCasilla.Start && t != TipoCasilla.End)
+                        // Solo categorias Clasico: el tablero guardado siempre lo es (Pareja se reparte en runtime).
+                        .Where(t => t > TipoCasilla.Start && t < TipoCasilla.End)
                         .Select(t => $"{t}: {numeradas.Count(c => c.Tipo == t)}"));
                 EditorGUILayout.HelpBox(resumen, MessageType.None);
             }

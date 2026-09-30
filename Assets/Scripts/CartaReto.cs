@@ -316,14 +316,20 @@ namespace Cubatis
                 fuenteReto = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RutaFuenteReto);
         }
 
-        private static readonly (TipoCasilla tipo, string archivo)[] Mapa =
+        // Nombre completo de portada y plantilla: las cartas del modo Pareja usan
+        // "_1"/"_2" en vez del " 1"/" 2" de las clasicas.
+        private static readonly (TipoCasilla tipo, string portada, string plantilla)[] Mapa =
         {
-            (TipoCasilla.Beber,   "beber"),
-            (TipoCasilla.Evento,  "evento"),
-            (TipoCasilla.Hot,     "hot"),
-            (TipoCasilla.Reto,    "reto"),
-            (TipoCasilla.Verdad,  "verdad"),
-            (TipoCasilla.YoNunca, "yo nunca"),
+            (TipoCasilla.Beber,        "beber 1",          "beber 2"),
+            (TipoCasilla.Evento,       "evento 1",         "evento 2"),
+            (TipoCasilla.Hot,          "hot 1",            "hot 2"),
+            (TipoCasilla.Reto,         "reto 1",           "reto 2"),
+            (TipoCasilla.Verdad,       "verdad 1",         "verdad 2"),
+            (TipoCasilla.YoNunca,      "yo nunca 1",       "yo nunca 2"),
+            (TipoCasilla.Conocimiento, "conocimiento_1",   "conocimiento_2"),
+            (TipoCasilla.Conexion,     "conexion_1",       "conexion_2"),
+            (TipoCasilla.Confesion,    "confesion_1",      "confesion_2"),
+            (TipoCasilla.RetoPareja,   "reto_pareja_1",    "reto_pareja_2"),
         };
 
         [ContextMenu("Cargar imagenes + frases de ejemplo")]
@@ -333,8 +339,8 @@ namespace Cubatis
             cartas = Mapa.Select(m =>
             {
                 Entrada e = Obtener(m.tipo) ?? new Entrada { tipo = m.tipo };
-                if (e.portada == null) e.portada = CargarSprite($"{carpeta}/{m.archivo} 1.png");
-                if (e.plantilla == null) e.plantilla = CargarSprite($"{carpeta}/{m.archivo} 2.png");
+                if (e.portada == null) e.portada = CargarSprite($"{carpeta}/{m.portada}.png");
+                if (e.plantilla == null) e.plantilla = CargarSprite($"{carpeta}/{m.plantilla}.png");
                 if (e.frases == null || e.frases.Length == 0)
                     e.frases = new[]
                     {
@@ -346,7 +352,7 @@ namespace Cubatis
             }).ToArray();
 
             EditorUtility.SetDirty(this);
-            Debug.Log("[CartaReto] Lista 'Cartas' rellenada con las 6 categorias.");
+            Debug.Log($"[CartaReto] Lista 'Cartas' rellenada con las {Mapa.Length} categorias.");
         }
 
         private static Sprite CargarSprite(string ruta) =>
@@ -355,6 +361,7 @@ namespace Cubatis
 
         // ===================== IMPORTAR FRASES DESDE CSV =====================
         private const string RutaFrasesCsv = "Assets/Boards/Cartas/frases.csv";
+        private const string RutaFrasesParejaCsv = "Assets/Boards/Cartas/modo_pareja.csv";
 
         // Texto de CATEGORIA del CSV (normalizado: mayusculas, sin espacios, sin
         // acentos) -> TipoCasilla. Hace falta un alias explicito porque "Bebe"
@@ -371,6 +378,17 @@ namespace Cubatis
             ["HOT"] = TipoCasilla.Hot,
         };
 
+        // Tabla aparte para el CSV del modo Pareja: ahi "Reto" significa
+        // RetoPareja, y con una tabla comun acabaria en el Reto clasico.
+        private static readonly Dictionary<string, TipoCasilla> AliasCategoriaParejaCsv = new Dictionary<string, TipoCasilla>
+        {
+            ["CONOCIMIENTO"] = TipoCasilla.Conocimiento,
+            ["CONEXION"] = TipoCasilla.Conexion,
+            ["CONFESION"] = TipoCasilla.Confesion,
+            ["RETO"] = TipoCasilla.RetoPareja,
+            ["RETOPAREJA"] = TipoCasilla.RetoPareja,
+        };
+
         /// <summary>
         /// Lee Assets/Boards/Cartas/frases.csv (columnas CATEGORIA, COLOR, FRASE;
         /// COLOR se ignora), agrupa por CATEGORIA y rellena 'frases' del elemento
@@ -383,36 +401,47 @@ namespace Cubatis
         /// componente CartaReto del Inspector > este item del menu contextual.
         /// </summary>
         [ContextMenu("Importar frases desde CSV (Assets/Boards/Cartas/frases.csv)")]
-        private void ImportarFrasesDesdeCSV()
+        private void ImportarFrasesDesdeCSV() => ImportarFrases(RutaFrasesCsv, 3, AliasCategoriaCsv);
+
+        /// <summary>
+        /// Igual que <see cref="ImportarFrasesDesdeCSV"/> pero para
+        /// Assets/Boards/Cartas/modo_pareja.csv (columnas CATEGORIA, FRASE), que
+        /// rellena solo las 4 categorias del modo Pareja. Las clasicas no se
+        /// tocan porque su tabla de alias no las incluye.
+        /// </summary>
+        [ContextMenu("Importar frases modo Pareja desde CSV (Assets/Boards/Cartas/modo_pareja.csv)")]
+        private void ImportarFrasesParejaDesdeCSV() => ImportarFrases(RutaFrasesParejaCsv, 2, AliasCategoriaParejaCsv);
+
+        // 'columnas': CATEGORIA es la primera y FRASE la ultima; las de en medio
+        // se ignoran.
+        private void ImportarFrases(string rutaCsv, int columnas, Dictionary<string, TipoCasilla> alias)
         {
-            if (!File.Exists(RutaFrasesCsv))
+            if (!File.Exists(rutaCsv))
             {
-                Debug.LogError($"[CartaReto] No se encontro el CSV en '{RutaFrasesCsv}'.");
+                Debug.LogError($"[CartaReto] No se encontro el CSV en '{rutaCsv}'.");
                 return;
             }
 
             // 1. Leer y agrupar por categoria, conservando el orden de aparicion
-            // en el CSV. La FRASE es todo lo que queda tras la 2a coma (por si
-            // alguna vez lleva comas dentro), CATEGORIA es el primer campo.
+            // en el CSV.
             var frasesPorCategoria = new List<(string categoria, List<string> frases)>();
             var indicePorClave = new Dictionary<string, int>();
 
-            string[] lineas = File.ReadAllLines(RutaFrasesCsv, Encoding.UTF8);
-            for (int i = 1; i < lineas.Length; i++)   // salta la cabecera CATEGORIA,COLOR,FRASE
+            string[] lineas = File.ReadAllLines(rutaCsv, Encoding.UTF8);
+            for (int i = 1; i < lineas.Length; i++)   // salta la cabecera
             {
                 string linea = lineas[i];
                 if (string.IsNullOrWhiteSpace(linea)) continue;
 
-                int primeraComa = linea.IndexOf(',');
-                int segundaComa = primeraComa >= 0 ? linea.IndexOf(',', primeraComa + 1) : -1;
-                if (primeraComa < 0 || segundaComa < 0)
+                string[] campos = LeerCamposCsv(linea, columnas);
+                if (campos == null)
                 {
-                    Debug.LogWarning($"[CartaReto] Linea {i + 1} del CSV ignorada (formato inesperado): {linea}");
+                    Debug.LogWarning($"[CartaReto] Linea {i + 1} de '{rutaCsv}' ignorada (formato inesperado): {linea}");
                     continue;
                 }
 
-                string categoria = linea.Substring(0, primeraComa).Trim();
-                string frase = linea.Substring(segundaComa + 1).Trim();
+                string categoria = campos[0];
+                string frase = campos[columnas - 1];
                 if (categoria.Length == 0 || frase.Length == 0) continue;
 
                 string clave = NormalizarClaveCategoria(categoria);
@@ -433,7 +462,7 @@ namespace Cubatis
             foreach (var (categoria, frasesCsv) in frasesPorCategoria)
             {
                 string clave = NormalizarClaveCategoria(categoria);
-                if (!AliasCategoriaCsv.TryGetValue(clave, out TipoCasilla tipo))
+                if (!alias.TryGetValue(clave, out TipoCasilla tipo))
                 {
                     sinCoincidencia.Add(categoria);
                     continue;
@@ -461,11 +490,57 @@ namespace Cubatis
             EditorUtility.SetDirty(this);
 
             // 3. Informe en consola.
-            Debug.Log("[CartaReto] Import de frases desde CSV completado:\n" +
+            Debug.Log($"[CartaReto] Import de frases desde '{rutaCsv}' completado:\n" +
                 (resumen.Count > 0 ? string.Join("\n", resumen) : "(ninguna categoria importada)"));
             if (sinCoincidencia.Count > 0)
                 Debug.LogWarning("[CartaReto] Categorias del CSV sin Tipo coincidente en 'Cartas' (revisar a mano): " +
                     string.Join(", ", sinCoincidencia));
+        }
+
+        // Parte una linea en 'columnas' campos. Los campos pueden ir entre
+        // comillas con "" como comilla escapada (modo_pareja.csv). La ultima
+        // columna se queda con todo el resto de la linea, para que una FRASE
+        // sin comillas pueda llevar comas (frases.csv). Null si faltan campos.
+        private static string[] LeerCamposCsv(string linea, int columnas)
+        {
+            var campos = new string[columnas];
+            int pos = 0;
+            for (int c = 0; c < columnas; c++)
+            {
+                if (pos > linea.Length) return null;
+                bool ultima = c == columnas - 1;
+                int inicio = pos;
+                while (inicio < linea.Length && linea[inicio] == ' ') inicio++;
+
+                if (inicio < linea.Length && linea[inicio] == '"')
+                {
+                    var sb = new StringBuilder();
+                    int j = inicio + 1;
+                    while (true)
+                    {
+                        if (j >= linea.Length) return null;   // comilla sin cerrar
+                        if (linea[j] == '"')
+                        {
+                            if (j + 1 < linea.Length && linea[j + 1] == '"') { sb.Append('"'); j += 2; continue; }
+                            j++;
+                            break;
+                        }
+                        sb.Append(linea[j++]);
+                    }
+                    campos[c] = sb.ToString().Trim();
+                    int coma = linea.IndexOf(',', j);
+                    pos = coma < 0 ? linea.Length + 1 : coma + 1;
+                }
+                else
+                {
+                    int coma = ultima ? -1 : linea.IndexOf(',', pos);
+                    if (!ultima && coma < 0) return null;
+                    int fin = coma < 0 ? linea.Length : coma;
+                    campos[c] = linea.Substring(pos, fin - pos).Trim();
+                    pos = fin + 1;
+                }
+            }
+            return campos;
         }
 
         // Coincide con el formato exacto que genera CargarDeDisco: cualquier
