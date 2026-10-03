@@ -362,6 +362,7 @@ namespace Cubatis
         // ===================== IMPORTAR FRASES DESDE CSV =====================
         private const string RutaFrasesCsv = "Assets/Boards/Cartas/frases.csv";
         private const string RutaFrasesParejaCsv = "Assets/Boards/Cartas/modo_pareja.csv";
+        private const string RutaFrasesHotCsv = "Assets/Boards/Cartas/Frases_Cubatis_Hot.csv";
 
         // Texto de CATEGORIA del CSV (normalizado: mayusculas, sin espacios, sin
         // acentos) -> TipoCasilla. Hace falta un alias explicito porque "Bebe"
@@ -389,6 +390,13 @@ namespace Cubatis
             ["RETOPAREJA"] = TipoCasilla.RetoPareja,
         };
 
+        // El CSV de Hot solo debe tocar Hot: cualquier otra categoria que se
+        // colara en el fichero se avisa por consola pero no se importa.
+        private static readonly Dictionary<string, TipoCasilla> AliasCategoriaHotCsv = new Dictionary<string, TipoCasilla>
+        {
+            ["HOT"] = TipoCasilla.Hot,
+        };
+
         /// <summary>
         /// Lee Assets/Boards/Cartas/frases.csv (columnas CATEGORIA, COLOR, FRASE;
         /// COLOR se ignora), agrupa por CATEGORIA y rellena 'frases' del elemento
@@ -401,7 +409,7 @@ namespace Cubatis
         /// componente CartaReto del Inspector > este item del menu contextual.
         /// </summary>
         [ContextMenu("Importar frases desde CSV (Assets/Boards/Cartas/frases.csv)")]
-        private void ImportarFrasesDesdeCSV() => ImportarFrases(RutaFrasesCsv, 3, AliasCategoriaCsv);
+        private void ImportarFrasesDesdeCSV() => ImportarFrases(RutaFrasesCsv, 3, 2, AliasCategoriaCsv);
 
         /// <summary>
         /// Igual que <see cref="ImportarFrasesDesdeCSV"/> pero para
@@ -410,49 +418,43 @@ namespace Cubatis
         /// tocan porque su tabla de alias no las incluye.
         /// </summary>
         [ContextMenu("Importar frases modo Pareja desde CSV (Assets/Boards/Cartas/modo_pareja.csv)")]
-        private void ImportarFrasesParejaDesdeCSV() => ImportarFrases(RutaFrasesParejaCsv, 2, AliasCategoriaParejaCsv);
+        private void ImportarFrasesParejaDesdeCSV() => ImportarFrases(RutaFrasesParejaCsv, 2, 1, AliasCategoriaParejaCsv);
 
-        // 'columnas': CATEGORIA es la primera y FRASE la ultima; las de en medio
-        // se ignoran.
-        private void ImportarFrases(string rutaCsv, int columnas, Dictionary<string, TipoCasilla> alias)
+        /// <summary>
+        /// Importa Assets/Boards/Cartas/Frases_Cubatis_Hot.csv (columnas
+        /// CATEGORIA, COLOR, NIVEL, FRASE, TRAGOS; solo CATEGORIA y FRASE se
+        /// usan) en la categoria Hot. Las 14 frases que traia Hot de serie no son
+        /// placeholders sino las filas Hot de frases.csv, asi que se toman de ahi
+        /// como "frases de ejemplo": si Hot solo contiene (un subconjunto de)
+        /// esas, se sustituyen enteras por las del CSV nuevo; si ya hay alguna
+        /// otra, se anaden solo las que falten, sin duplicar ni borrar nada.
+        /// </summary>
+        [ContextMenu("Importar frases Hot desde CSV (Assets/Boards/Cartas/Frases_Cubatis_Hot.csv)")]
+        private void ImportarFrasesHotDesdeCSV()
         {
-            if (!File.Exists(rutaCsv))
-            {
-                Debug.LogError($"[CartaReto] No se encontro el CSV en '{rutaCsv}'.");
-                return;
-            }
+            var ejemplosHot = new HashSet<string>();
+            var csvBase = LeerFrasesCsv(RutaFrasesCsv, 3, 2);
+            if (csvBase != null)
+                foreach (var (categoria, frases) in csvBase)
+                    if (AliasCategoriaCsv.TryGetValue(NormalizarClaveCategoria(categoria), out TipoCasilla tipo) &&
+                        tipo == TipoCasilla.Hot)
+                        ejemplosHot.UnionWith(frases);
 
+            ImportarFrases(RutaFrasesHotCsv, 5, 3, AliasCategoriaHotCsv, ejemplosHot);
+        }
+
+        // 'columnas' = numero de columnas del CSV; la CATEGORIA es siempre la
+        // primera y 'columnaFrase' (base 0) la que lleva el texto; las demas se
+        // ignoran. 'frasesDeEjemplo' (opcional): si las frases actuales de una
+        // categoria son todas de este conjunto, se sustituyen enteras igual que
+        // los placeholders.
+        private void ImportarFrases(string rutaCsv, int columnas, int columnaFrase,
+            Dictionary<string, TipoCasilla> alias, HashSet<string> frasesDeEjemplo = null)
+        {
             // 1. Leer y agrupar por categoria, conservando el orden de aparicion
             // en el CSV.
-            var frasesPorCategoria = new List<(string categoria, List<string> frases)>();
-            var indicePorClave = new Dictionary<string, int>();
-
-            string[] lineas = File.ReadAllLines(rutaCsv, Encoding.UTF8);
-            for (int i = 1; i < lineas.Length; i++)   // salta la cabecera
-            {
-                string linea = lineas[i];
-                if (string.IsNullOrWhiteSpace(linea)) continue;
-
-                string[] campos = LeerCamposCsv(linea, columnas);
-                if (campos == null)
-                {
-                    Debug.LogWarning($"[CartaReto] Linea {i + 1} de '{rutaCsv}' ignorada (formato inesperado): {linea}");
-                    continue;
-                }
-
-                string categoria = campos[0];
-                string frase = campos[columnas - 1];
-                if (categoria.Length == 0 || frase.Length == 0) continue;
-
-                string clave = NormalizarClaveCategoria(categoria);
-                if (!indicePorClave.TryGetValue(clave, out int idx))
-                {
-                    idx = frasesPorCategoria.Count;
-                    indicePorClave[clave] = idx;
-                    frasesPorCategoria.Add((categoria, new List<string>()));
-                }
-                frasesPorCategoria[idx].frases.Add(frase);
-            }
+            var frasesPorCategoria = LeerFrasesCsv(rutaCsv, columnas, columnaFrase);
+            if (frasesPorCategoria == null) return;
 
             // 2. Volcar cada categoria del CSV sobre el elemento de 'cartas' con
             // el mismo Tipo.
@@ -476,7 +478,14 @@ namespace Cubatis
                 }
 
                 bool teniaPlaceholders = SonPlaceholders(entrada.frases);
-                var actuales = teniaPlaceholders ? new List<string>() : new List<string>(entrada.frases);
+                int sustituidas = 0;
+                if (!teniaPlaceholders && frasesDeEjemplo != null && frasesDeEjemplo.Count > 0 &&
+                    entrada.frases.All(frasesDeEjemplo.Contains))
+                    sustituidas = entrada.frases.Length;
+
+                var actuales = teniaPlaceholders || sustituidas > 0
+                    ? new List<string>()
+                    : new List<string>(entrada.frases);
 
                 int anadidas = 0;
                 foreach (string frase in frasesCsv)
@@ -484,7 +493,8 @@ namespace Cubatis
 
                 entrada.frases = actuales.ToArray();
                 resumen.Add($"{tipo}: {anadidas} frase(s) importada(s), total {actuales.Count}" +
-                    (teniaPlaceholders ? " (placeholders sustituidos)" : ""));
+                    (teniaPlaceholders ? " (placeholders sustituidos)" :
+                     sustituidas > 0 ? $" ({sustituidas} frase(s) de ejemplo sustituidas)" : ""));
             }
 
             EditorUtility.SetDirty(this);
@@ -495,6 +505,48 @@ namespace Cubatis
             if (sinCoincidencia.Count > 0)
                 Debug.LogWarning("[CartaReto] Categorias del CSV sin Tipo coincidente en 'Cartas' (revisar a mano): " +
                     string.Join(", ", sinCoincidencia));
+        }
+
+        // Lee el CSV y agrupa las frases por categoria (texto tal cual aparece en
+        // el CSV), en orden de aparicion. Null si no existe el fichero.
+        private static List<(string categoria, List<string> frases)> LeerFrasesCsv(string rutaCsv, int columnas, int columnaFrase)
+        {
+            if (!File.Exists(rutaCsv))
+            {
+                Debug.LogError($"[CartaReto] No se encontro el CSV en '{rutaCsv}'.");
+                return null;
+            }
+
+            var frasesPorCategoria = new List<(string categoria, List<string> frases)>();
+            var indicePorClave = new Dictionary<string, int>();
+
+            string[] lineas = File.ReadAllLines(rutaCsv, Encoding.UTF8);
+            for (int i = 1; i < lineas.Length; i++)   // salta la cabecera
+            {
+                string linea = lineas[i];
+                if (string.IsNullOrWhiteSpace(linea)) continue;
+
+                string[] campos = LeerCamposCsv(linea, columnas);
+                if (campos == null)
+                {
+                    Debug.LogWarning($"[CartaReto] Linea {i + 1} de '{rutaCsv}' ignorada (formato inesperado): {linea}");
+                    continue;
+                }
+
+                string categoria = campos[0];
+                string frase = campos[columnaFrase];
+                if (categoria.Length == 0 || frase.Length == 0) continue;
+
+                string clave = NormalizarClaveCategoria(categoria);
+                if (!indicePorClave.TryGetValue(clave, out int idx))
+                {
+                    idx = frasesPorCategoria.Count;
+                    indicePorClave[clave] = idx;
+                    frasesPorCategoria.Add((categoria, new List<string>()));
+                }
+                frasesPorCategoria[idx].frases.Add(frase);
+            }
+            return frasesPorCategoria;
         }
 
         // Parte una linea en 'columnas' campos. Los campos pueden ir entre

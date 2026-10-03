@@ -5996,7 +5996,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.6520767
+  orthographic size: 7.6414857
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12792,20 +12792,66 @@ MonoBehaviour:
     portada: {fileID: -1020366611377937018, guid: a63b700e7fd62a34fac6eed01ecf85ab, type: 3}
     plantilla: {fileID: 216851716356719090, guid: ecbfd9cb1daa12e419df94477f114935, type: 3}
     frases:
-    - "\xBFA qui\xE9n del grupo besar\xEDas si no hubiera consecuencias?"
-    - "Describe cu\xE1l ser\xEDa tu cita perfecta con alguien de aqu\xED."
-    - "\xBFCu\xE1l ha sido tu beso m\xE1s inc\xF3modo?"
-    - Haz un cumplido subido de tono a la persona de tu derecha.
-    - "\xBFAlguna vez te has enamorado de alguien de este grupo?"
-    - "Sus\xFArrale algo al o\xEDdo a la persona que tengas m\xE1s cerca."
-    - "\xBFQu\xE9 es lo primero que te fijas en alguien que te atrae?"
-    - "Confiesa qui\xE9n te parece la persona m\xE1s atractiva de la sala."
-    - "\xBFCu\xE1l ha sido tu cita m\xE1s rara?"
-    - "Haz contacto visual con la persona de tu izquierda durante diez segundos sin re\xEDrte."
-    - "\xBFPrefieres un beso en la mejilla o un abrazo largo y por qu\xE9?"
-    - Cuenta la historia de tu primer flechazo.
-    - "\xBFAlguna vez has tenido un crush con el amigo o la amiga de un amigo?"
-    - "Baila una canci\xF3n lenta con el jugador que elijas."
+    - Dale un beso en la mejilla a la persona de tu derecha.
+    - Haz un duelo de miradas sexys con la persona de enfrente.
+    - Dale un beso en el cuello a la persona de tu izquierda.
+    - "Todo el grupo elige a qui\xE9n le tienes que dar un beso en la mejilla."
+    - "Besa a la persona con la cual te liar\xEDas esta noche."
+    - "Lame la cara a la persona con la cual te liar\xEDas esta noche."
+    - "Dale un pico a alguien de tu mismo g\xE9nero."
+    - Dale un beso en la mejilla a la persona de tu derecha durante 5 segundos.
+    - "El grupo elige qu\xE9 parte del cuerpo besas de la persona de tu izquierda."
+    - Acaricia el cuello de la persona de tu derecha de manera sensual durante 10 segundos.
+    - Dale un beso en la mano a la persona de tu izquierda mientras la miras a los ojos.
+    - "Sus\xFArrale algo sexy al o\xEDdo a la persona de enfrente."
+    - "Si\xE9ntate en las piernas de la persona de tu derecha hasta tu pr\xF3ximo turno."
+    - Haz un baile sensual de 15 segundos a la persona que elija el grupo.
+    - "Dale un beso en la frente a la persona m\xE1s guapa de la mesa (seg\xFAn t\xFA)."
+    - "Mu\xE9rdele suavemente la oreja a la persona de tu derecha."
+    - Dile un piropo subido de tono a la persona de tu izquierda.
+    - Acaricia el pelo de la persona de enfrente durante 10 segundos.
+    - "Dale un abrazo de 15 segundos a la persona con la que m\xE1s qu\xEDmica tienes."
+    - "Ens\xE9\xF1ale al grupo c\xF3mo ligar\xEDas con la persona de tu derecha."
+    - Pon tu cara de ligar mirando a la persona que elija el grupo.
+    - "Dale un beso en la mejilla a todos los del g\xE9nero opuesto."
+    - Hazle un masaje de hombros de 20 segundos a la persona de tu izquierda.
+    - Dale de beber de tu vaso a la persona de enfrente sin usar las manos.
+    - Pasa un hielo con la boca a la persona de tu derecha.
+    - "Lee en voz alta, con voz sexy, el \xFAltimo mensaje que has enviado."
+    - Elige a alguien y bailad pegados durante 20 segundos.
+    - "Dale un beso en la mejilla a cada persona y di cu\xE1l te ha gustado m\xE1s."
+    - "Di a qui\xE9n de la mesa le dar\xEDas un beso ahora mismo."
+    - "Duelo de miradas con la persona de tu izquierda: el primero que se r\xEDa pierde."
+    - Deja que la persona de tu derecha te escriba lo que quiera en el brazo.
+    - Con tu mejor voz sexy, pide a la persona de enfrente que te sirva una copa.
+    - Dale un beso en la mano a la persona que elija el grupo.
+    - 'Haz de mesa: la persona de tu izquierda apoya su vaso en tu espalda 10 segundos.'
+    - "Cu\xE9ntale al o\xEDdo tu fantas\xEDa m\xE1s inocente a la persona de tu derecha."
+    - "Dale un pico a la persona de tu derecha. Si no, beb\xE9is los dos."
+    - Haz un body shot del cuello de la persona que elija el grupo.
+    - Dale un beso en el cuello a la persona de enfrente durante 5 segundos.
+    - "Qu\xEDtate una prenda (ni zapatos ni calcetines)."
+    - "Lame sal del cuello de alguien y b\xE9bete un chupito."
+    - Besa a la persona que elija el grupo donde elija el grupo (dentro de lo razonable).
+    - "Dale un pico a la persona que te parezca m\xE1s atractiva de la mesa."
+    - "Si\xE9ntate a horcajadas sobre la persona de tu izquierda durante 10 segundos."
+    - "B\xE9bete un chupito del ombligo de alguien que acepte."
+    - Besa el hombro de la persona de tu derecha subiendo hasta el cuello.
+    - "Dale un beso de 3 segundos a la persona con la que te liar\xEDas esta noche."
+    - Haz un baile sensual sentado sobre las piernas de quien elija el grupo.
+    - Intercambia una prenda con la persona de enfrente hasta el final de la partida.
+    - Pasa una fresa o un caramelo de tu boca a la de alguien.
+    - "Cierra los ojos: alguien elegido por el grupo te besa y tienes que adivinar qui\xE9n es."
+    - "Muerde suavemente el labio de la persona con la que te liar\xEDas."
+    - "Dale un beso en el cuello a cada persona de tu mismo g\xE9nero."
+    - 'Pico de 5 segundos con la persona de tu derecha: quien se aparte primero pierde.'
+    - "S\xEDrvele un chupito a alguien tumbado boca arriba y d\xE1selo t\xFA."
+    - Elige a dos personas de la mesa que tienen que darse un pico.
+    - "Besa tu mano como besar\xEDas a la persona de enfrente."
+    - Lame la oreja de la persona de tu izquierda.
+    - "El grupo elige a qui\xE9n besas y cu\xE1nto dura (m\xE1ximo 10 segundos)."
+    - "Qu\xEDtale una prenda a la persona de tu derecha, si te deja (ni zapatos ni calcetines)."
+    - "Pico en ronda: t\xFA y las dos personas que elija el grupo."
   - tipo: 4
     portada: {fileID: 3693002286276395167, guid: ca08abe79d353dc42aea5d9283f1defb, type: 3}
     plantilla: {fileID: 152406670805455862, guid: cf66064c3dc78874384d4a5acc61f7e5, type: 3}
@@ -12901,23 +12947,23 @@ MonoBehaviour:
     frases:
     - "Miraos a los ojos durante 30 segundos sin re\xEDros. El primero que se r\xEDa, bebe."
     - "Cogeos de la mano y no os solt\xE9is hasta vuestro pr\xF3ximo turno."
-    - "Dale a tu pareja un abrazo de 20 segundos y no la sueltes antes de tiempo."
+    - Dale a tu pareja un abrazo de 20 segundos y no la sueltes antes de tiempo.
     - "Pon la mano en el pecho de tu pareja y no la quites hasta que notes su coraz\xF3n."
     - "Sus\xFArrale al o\xEDdo algo que te encante de ella."
-    - "Juntad las frentes y respirad a la vez durante diez respiraciones."
-    - "Dale un beso en la mejilla, otro en la frente y otro en la mano, en el orden que prefieras."
+    - Juntad las frentes y respirad a la vez durante diez respiraciones.
+    - Dale un beso en la mejilla, otro en la frente y otro en la mano, en el orden que prefieras.
     - "Ponte detr\xE1s de tu pareja y dale un masaje en los hombros durante un minuto."
     - "Dile a tu pareja cu\xE1nto la quieres solo con la mirada, sin decir nada, durante 15 segundos."
-    - "Entrelazad los dedos y contad un recuerdo bonito juntos: uno lo empieza y el otro lo termina."
-    - "Cierra los ojos y acaricia la cara de tu pareja como si quisieras memorizarla."
+    - 'Entrelazad los dedos y contad un recuerdo bonito juntos: uno lo empieza y el otro lo termina.'
+    - Cierra los ojos y acaricia la cara de tu pareja como si quisieras memorizarla.
     - "Bailad abrazados una canci\xF3n lenta imaginaria durante 30 segundos."
-    - "Sentaos espalda con espalda y levantaos a la vez sin usar las manos."
-    - "Escribe con el dedo una palabra bonita en la espalda de tu pareja. Tiene que adivinarla."
-    - "Dale las gracias a tu pareja por algo concreto que haya hecho por ti esta semana."
-    - "Poneos cara a cara y copiad los gestos del otro como si fuerais un espejo durante 30 segundos."
+    - Sentaos espalda con espalda y levantaos a la vez sin usar las manos.
+    - Escribe con el dedo una palabra bonita en la espalda de tu pareja. Tiene que adivinarla.
+    - Dale las gracias a tu pareja por algo concreto que haya hecho por ti esta semana.
+    - Poneos cara a cara y copiad los gestos del otro como si fuerais un espejo durante 30 segundos.
     - "Dale un beso de esquimal y estrena un apodo cari\xF1oso para tu pareja."
     - "Apoya la cabeza en el hombro de tu pareja y qu\xE9date as\xED durante toda la siguiente ronda."
-    - "Coge la mano de tu pareja y dale un beso en cada nudillo."
+    - Coge la mano de tu pareja y dale un beso en cada nudillo.
     - "Miraos a los ojos y decid a la vez una palabra que defina vuestra relaci\xF3n."
   - tipo: 10
     portada: {fileID: -4268472478827362279, guid: a3fc8b1530657314cb5cf1bac1659269, type: 3}
@@ -12932,7 +12978,7 @@ MonoBehaviour:
     - "\xBFCu\xE1l es tu mayor inseguridad cuando est\xE1s con tu pareja?"
     - "\xBFQu\xE9 prenda te encanta verle puesta a tu pareja\u2026 y cu\xE1l prefieres que se quite?"
     - "\xBFAlguna vez has sentido celos y te lo has callado? Cu\xE9ntalo."
-    - "Confiesa algo que fingiste que te gustaba al principio solo para impresionar a tu pareja."
+    - Confiesa algo que fingiste que te gustaba al principio solo para impresionar a tu pareja.
     - "\xBFQu\xE9 es lo que m\xE1s echar\xEDas de menos de tu pareja si ma\xF1ana no estuviera?"
     - "\xBFCu\xE1l es el beso vuestro que mejor recuerdas? Descr\xEDbelo."
     - "\xBFQu\xE9 te gustar\xEDa que tu pareja te dijera m\xE1s a menudo?"
@@ -12940,7 +12986,7 @@ MonoBehaviour:
     - "\xBFQu\xE9 parte del cuerpo de tu pareja miras cuando cree que no te das cuenta?"
     - "\xBFHay algo de vuestra rutina que te gustar\xEDa cambiar y todav\xEDa no te has atrevido a decir?"
     - "\xBFQu\xE9 es lo m\xE1s atrevido que se te ha pasado por la cabeza hacer con tu pareja en un sitio p\xFAblico? Sin entrar en detalles."
-    - "Cuenta una vez en la que tu pareja te hizo sentir especialmente querido o querida."
+    - Cuenta una vez en la que tu pareja te hizo sentir especialmente querido o querida.
     - "\xBFCu\xE1l es el mensaje de tu pareja que m\xE1s veces has rele\xEDdo?"
     - "\xBFQu\xE9 te da miedo que se pierda en vuestra relaci\xF3n con el paso del tiempo?"
   - tipo: 11
@@ -12951,15 +12997,15 @@ MonoBehaviour:
     - "Inventad un c\xF3digo secreto con gestos para deciros \"v\xE1monos ya\" en una fiesta."
     - "Contad por turnos recuerdos de vuestra relaci\xF3n. El primero que se quede en blanco, bebe."
     - "Haz re\xEDr a tu pareja en menos de 30 segundos sin tocarla. Si no lo consigues, bebes."
-    - "Cread una historia juntos diciendo una palabra cada uno hasta completar tres frases."
+    - Cread una historia juntos diciendo una palabra cada uno hasta completar tres frases.
     - "Dise\xF1ad en un minuto vuestra cita ideal: el sitio, la comida y un plan sorpresa."
     - "Imita a tu pareja reci\xE9n despertada por la ma\xF1ana. Ella decide si ha sido fiel o exagerado."
     - "Tararea una canci\xF3n importante para vosotros. Si tu pareja no la adivina en tres intentos, bebe."
     - "Poneos un nombre art\xEDstico de pareja y presentaos como si salierais en un programa de la tele."
     - "Duelo de miradas: el primero que parpadee o se r\xEDa, bebe."
-    - "Describe a tu pareja con solo tres palabras. Luego ella hace lo mismo contigo sin repetir ninguna."
-    - "Inventad un baile de pareja de 10 segundos y representadlo ahora mismo."
-    - "Piedra, papel o tijera al mejor de tres. Quien pierda le dedica un piropo al ganador."
+    - Describe a tu pareja con solo tres palabras. Luego ella hace lo mismo contigo sin repetir ninguna.
+    - Inventad un baile de pareja de 10 segundos y representadlo ahora mismo.
+    - Piedra, papel o tijera al mejor de tres. Quien pierda le dedica un piropo al ganador.
     - "Cuenta el chiste m\xE1s malo que te sepas. Si tu pareja se r\xEDe, bebe ella; si no, bebes t\xFA."
     - "Escribid en secreto la canci\xF3n que m\xE1s os representa como pareja. Si coincid\xEDs, repart\xEDs un trago cada uno."
     - "Hazle a tu pareja una declaraci\xF3n de amor dram\xE1tica como si estuvierais en una telenovela."

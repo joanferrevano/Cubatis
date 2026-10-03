@@ -104,6 +104,10 @@ añadirla a Build Settings y re-apuntar esos campos.
   `frases.csv` (CATEGORIA, COLOR, FRASE) para las clásicas y
   `modo_pareja.csv` (CATEGORIA, FRASE, con comillas) para las de Pareja. Cada
   CSV tiene su propia tabla de alias (en el de Pareja, "Reto" = RetoPareja).
+  `Frases_Cubatis_Hot.csv` (CATEGORIA, COLOR, NIVEL, FRASE, TRAGOS; frases
+  con comas entre comillas) tiene su propio menú y solo toca Hot: si Hot
+  contiene solo las 14 de serie (las filas Hot de `frases.csv`) las
+  sustituye enteras, y si ya hay otras, añade solo las que falten.
 - `AjusteCamaraTablero`: encuadra la cámara ortográfica al ancho del tablero.
 - `FondoJuego`: fuerza el sorting order del fondo por detrás de todo.
 - `BotonSalirTablero`: botón de abandonar partida con confirmación; se
